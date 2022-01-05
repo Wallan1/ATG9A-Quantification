@@ -215,9 +215,102 @@ pre code {
 
 
 <!-- rnb-text-begin -->
+<p>CSV import - <em>Mac</em> <em>change input file path</em></p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVzdGRhdGE9cmVhZC5jc3YoZmlsZT1cIn4vRGVza3RvcC8yOUp1bjIxX2FuYWx5c2lzL05TVzMwMTdfYmFzYWxfY291bnRzXzI5SnVuMjEuY3N2XCIsaGVhZGVyPVRSVUUpXG50ZXN0ZGF0YSRCdnNTPC1cIkJhc2FsXCJcbnRlc3RkYXRhJEJhZkE8LVwiQmFmQU5cIlxudGVzdGRhdGEkUmVwPC00XG5ub2JzPW5yb3codGVzdGRhdGEpXG5mb3IgKGkgaW4gMTpub2JzKSB7XG4gIGlmICh0ZXN0ZGF0YVtpLDFdPT1cIlwiKSB7XG4gICAgdGVzdGRhdGFbaSwxXTwtZm5hbWVcblxuICB9IFxuICBlbHNlIHtcbiAgICBmbmFtZT10ZXN0ZGF0YVtpLDFdXG5cbiAgfVxufVxuXG5gYGAifQ== -->
+<pre class="r"><code>testdata=read.csv(file=&quot;~/Desktop/29Jun21_analysis/NSW3017_basal_counts_29Jun21.csv&quot;,header=TRUE)
+testdata$BvsS&lt;-&quot;Basal&quot;
+testdata$BafA&lt;-&quot;BafAN&quot;
+testdata$Rep&lt;-4
+nobs=nrow(testdata)
+for (i in 1:nobs) {
+  if (testdata[i,1]==&quot;&quot;) {
+    testdata[i,1]&lt;-fname
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIjEwLUxvYWQtRGF0YSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCg==</div>
+  } 
+  else {
+    fname=testdata[i,1]
+
+  }
+}
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>CSV import - <em>Windows</em> <em>MUST HAVE FILES IN R PROJECT WD</em> <em>change input file path</em></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcD1yZWFkLmNzdihmaWxlPVwiLi9kYXRhc2V0cy9OU1c0MDE5XzNKYW4yMi5jc3ZcIixoZWFkZXI9VFJVRSlcbnRlbXAkQnZzUzwtXCJCYXNhbFwiXG50ZW1wJFJlcDwtMVxubm9icz1ucm93KHRlbXApXG5mb3IgKGkgaW4gMTpub2JzKSB7XG4gIGlmICh0ZW1wW2ksMV09PVwiXCIpIHtcbiAgICB0ZW1wW2ksMV08LWZuYW1lXG5cbiAgfSBcbiAgZWxzZSB7XG4gICAgZm5hbWU9dGVtcFtpLDFdXG5cbiAgfVxufVxuXG5gYGAifQ== -->
+<pre class="r"><code>temp=read.csv(file=&quot;./datasets/NSW4019_3Jan22.csv&quot;,header=TRUE)
+temp$BvsS&lt;-&quot;Basal&quot;
+temp$Rep&lt;-1
+nobs=nrow(temp)
+for (i in 1:nobs) {
+  if (temp[i,1]==&quot;&quot;) {
+    temp[i,1]&lt;-fname
+
+  } 
+  else {
+    fname=temp[i,1]
+
+  }
+}
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Adding type designation <em>if necessary update substring values based on filename in input document</em> <em>check capitalization of values</em></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcCRUeXBlPC1OQVxubnRlbXA8LW5yb3codGVtcClcblxuXG5mb3IgKGMgaW4gMTpudGVtcCkge1xuICBpZiAoc3Vic3RyKHRlbXBbYywxXSwyOSwyOSk9PVwiV1wiKSB7XG4gICAgdGVtcCRUeXBlW2NdPC1cIldUXCJcbiAgfVxuICBlbHNlIGlmIChzdWJzdHIodGVtcFtjLDFdLDI5LDI5KT09XCJDXCIpIHtcbiAgICB0ZW1wJFR5cGVbY108LVwiQ29udHJvbFwiXG4gIH1cbiAgZWxzZSBpZiAoc3Vic3RyKHRlbXBbYywxXSwyOSwyOSk9PVwiVFwiKSB7XG4gICAgdGVtcCRUeXBlW2NdPC1cInRlcHNpblwiXG4gIH1cbiAgZWxzZSB7XG4gICAgdGVtcCRUeXBlW2NdPC1cIkFQNEUxXCJcbiAgfVxuICBcbn1cbnRlbXAkVHlwZTwtZmFjdG9yKHRlbXAkVHlwZSwgbGV2ZWxzPWMoXCJXVFwiLCBcIkNvbnRyb2xcIiwgXCJ0ZXBzaW5cIiwgXCJBUDRFMVwiKSlcbmBgYCJ9 -->
+<pre class="r"><code>temp$Type&lt;-NA
+ntemp&lt;-nrow(temp)
+
+
+for (c in 1:ntemp) {
+  if (substr(temp[c,1],29,29)==&quot;W&quot;) {
+    temp$Type[c]&lt;-&quot;WT&quot;
+  }
+  else if (substr(temp[c,1],29,29)==&quot;C&quot;) {
+    temp$Type[c]&lt;-&quot;Control&quot;
+  }
+  else if (substr(temp[c,1],29,29)==&quot;T&quot;) {
+    temp$Type[c]&lt;-&quot;tepsin&quot;
+  }
+  else {
+    temp$Type[c]&lt;-&quot;AP4E1&quot;
+  }
+  
+}
+temp$Type&lt;-factor(temp$Type, levels=c(&quot;WT&quot;, &quot;Control&quot;, &quot;tepsin&quot;, &quot;AP4E1&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#Logic checks to ensure data is used only from properly segmented cells <em>DEVELOP</em></p>
+<p>To fill Golgi ATG9Aint with 0 values for quantification: This function will replace NA rows in the SumGolATG9A column with 0 so they will be acknowledged in the data analysis</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcFtpcy5uYSh0ZW1wWywzXSksM108LTBcbmBgYCJ9 -->
+<pre class="r"><code>temp[is.na(temp[,3]),3]&lt;-0</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>#Data calculation operations</p>
+<p>Calculate the ratio of Golgi localized ATG9A relative to whole cell measurement</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcCRQZXJjR29sQVRHOTwtTkFcbm50ZW1wPC1ucm93KHRlbXApXG5cbmZvciAoaSBpbiAxOm50ZW1wKSB7XG4gIHRlbXBbaSw4XTwtKHRlbXBbaSwzXS90ZW1wW2ksNF0pKjEwMFxufVxuYGBgIn0= -->
+<pre class="r"><code>temp$PercGolATG9&lt;-NA
+ntemp&lt;-nrow(temp)
+
+for (i in 1:ntemp) {
+  temp[i,8]&lt;-(temp[i,3]/temp[i,4])*100
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIjEwLUxvYWQtRGF0YSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCkNTViBpbXBvcnQgLSAqTWFjKg0KKmNoYW5nZSBpbnB1dCBmaWxlIHBhdGgqDQpgYGB7cn0NCnRlc3RkYXRhPXJlYWQuY3N2KGZpbGU9In4vRGVza3RvcC8yOUp1bjIxX2FuYWx5c2lzL05TVzMwMTdfYmFzYWxfY291bnRzXzI5SnVuMjEuY3N2IixoZWFkZXI9VFJVRSkNCnRlc3RkYXRhJEJ2c1M8LSJCYXNhbCINCnRlc3RkYXRhJEJhZkE8LSJCYWZBTiINCnRlc3RkYXRhJFJlcDwtNA0Kbm9icz1ucm93KHRlc3RkYXRhKQ0KZm9yIChpIGluIDE6bm9icykgew0KICBpZiAodGVzdGRhdGFbaSwxXT09IiIpIHsNCiAgICB0ZXN0ZGF0YVtpLDFdPC1mbmFtZQ0KDQogIH0gDQogIGVsc2Ugew0KICAgIGZuYW1lPXRlc3RkYXRhW2ksMV0NCg0KICB9DQp9DQoNCmBgYA0KDQoNCkNTViBpbXBvcnQgLSAqV2luZG93cyoNCipNVVNUIEhBVkUgRklMRVMgSU4gUiBQUk9KRUNUIFdEKiANCipjaGFuZ2UgaW5wdXQgZmlsZSBwYXRoKg0KYGBge3J9DQp0ZW1wPXJlYWQuY3N2KGZpbGU9Ii4vZGF0YXNldHMvTlNXNDAxOV8zSmFuMjIuY3N2IixoZWFkZXI9VFJVRSkNCnRlbXAkQnZzUzwtIkJhc2FsIg0KdGVtcCRSZXA8LTENCm5vYnM9bnJvdyh0ZW1wKQ0KZm9yIChpIGluIDE6bm9icykgew0KICBpZiAodGVtcFtpLDFdPT0iIikgew0KICAgIHRlbXBbaSwxXTwtZm5hbWUNCg0KICB9IA0KICBlbHNlIHsNCiAgICBmbmFtZT10ZW1wW2ksMV0NCg0KICB9DQp9DQoNCmBgYA0KDQpBZGRpbmcgdHlwZSBkZXNpZ25hdGlvbg0KKmlmIG5lY2Vzc2FyeSB1cGRhdGUgc3Vic3RyaW5nIHZhbHVlcyBiYXNlZCBvbiBmaWxlbmFtZSBpbiBpbnB1dCBkb2N1bWVudCoNCipjaGVjayBjYXBpdGFsaXphdGlvbiBvZiB2YWx1ZXMqDQpgYGB7cn0NCnRlbXAkVHlwZTwtTkENCm50ZW1wPC1ucm93KHRlbXApDQoNCg0KZm9yIChjIGluIDE6bnRlbXApIHsNCiAgaWYgKHN1YnN0cih0ZW1wW2MsMV0sMjksMjkpPT0iVyIpIHsNCiAgICB0ZW1wJFR5cGVbY108LSJXVCINCiAgfQ0KICBlbHNlIGlmIChzdWJzdHIodGVtcFtjLDFdLDI5LDI5KT09IkMiKSB7DQogICAgdGVtcCRUeXBlW2NdPC0iQ29udHJvbCINCiAgfQ0KICBlbHNlIGlmIChzdWJzdHIodGVtcFtjLDFdLDI5LDI5KT09IlQiKSB7DQogICAgdGVtcCRUeXBlW2NdPC0idGVwc2luIg0KICB9DQogIGVsc2Ugew0KICAgIHRlbXAkVHlwZVtjXTwtIkFQNEUxIg0KICB9DQogIA0KfQ0KdGVtcCRUeXBlPC1mYWN0b3IodGVtcCRUeXBlLCBsZXZlbHM9YygiV1QiLCAiQ29udHJvbCIsICJ0ZXBzaW4iLCAiQVA0RTEiKSkNCmBgYA0KDQojTG9naWMgY2hlY2tzIHRvIGVuc3VyZSBkYXRhIGlzIHVzZWQgb25seSBmcm9tIHByb3Blcmx5IHNlZ21lbnRlZCBjZWxscw0KKkRFVkVMT1AqDQoNCg0KDQpUbyBmaWxsIEdvbGdpIEFURzlBaW50IHdpdGggMCB2YWx1ZXMgZm9yIHF1YW50aWZpY2F0aW9uOg0KVGhpcyBmdW5jdGlvbiB3aWxsIHJlcGxhY2UgTkEgcm93cyBpbiB0aGUgU3VtR29sQVRHOUEgY29sdW1uIHdpdGggMCBzbyB0aGV5IHdpbGwgYmUgYWNrbm93bGVkZ2VkIGluIHRoZSBkYXRhIGFuYWx5c2lzDQpgYGB7cn0NCnRlbXBbaXMubmEodGVtcFssM10pLDNdPC0wDQpgYGANCg0KDQoNCg0KI0RhdGEgY2FsY3VsYXRpb24gb3BlcmF0aW9ucw0KDQpDYWxjdWxhdGUgdGhlIHJhdGlvIG9mIEdvbGdpIGxvY2FsaXplZCBBVEc5QSByZWxhdGl2ZSB0byB3aG9sZSBjZWxsIG1lYXN1cmVtZW50DQpgYGB7cn0NCnRlbXAkUGVyY0dvbEFURzk8LU5BDQpudGVtcDwtbnJvdyh0ZW1wKQ0KDQpmb3IgKGkgaW4gMTpudGVtcCkgew0KICB0ZW1wW2ksOF08LSh0ZW1wW2ksM10vdGVtcFtpLDRdKSoxMDANCn0NCmBgYA0K</div>
 
 
 

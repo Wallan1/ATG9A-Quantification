@@ -3,3 +3,97 @@ title: "10-Load-Data"
 output: html_notebook
 ---
 
+CSV import - *Mac*
+*change input file path*
+```{r}
+testdata=read.csv(file="~/Desktop/29Jun21_analysis/NSW3017_basal_counts_29Jun21.csv",header=TRUE)
+testdata$BvsS<-"Basal"
+testdata$BafA<-"BafAN"
+testdata$Rep<-4
+nobs=nrow(testdata)
+for (i in 1:nobs) {
+  if (testdata[i,1]=="") {
+    testdata[i,1]<-fname
+
+  } 
+  else {
+    fname=testdata[i,1]
+
+  }
+}
+
+```
+
+
+CSV import - *Windows*
+*MUST HAVE FILES IN R PROJECT WD* 
+*change input file path*
+```{r}
+temp=read.csv(file="./datasets/NSW4019_3Jan22.csv",header=TRUE)
+temp$BvsS<-"Basal"
+temp$Rep<-1
+nobs=nrow(temp)
+for (i in 1:nobs) {
+  if (temp[i,1]=="") {
+    temp[i,1]<-fname
+
+  } 
+  else {
+    fname=temp[i,1]
+
+  }
+}
+
+```
+
+Adding type designation
+*if necessary update substring values based on filename in input document*
+*check capitalization of values*
+```{r}
+temp$Type<-NA
+ntemp<-nrow(temp)
+
+
+for (c in 1:ntemp) {
+  if (substr(temp[c,1],29,29)=="W") {
+    temp$Type[c]<-"WT"
+  }
+  else if (substr(temp[c,1],29,29)=="C") {
+    temp$Type[c]<-"Control"
+  }
+  else if (substr(temp[c,1],29,29)=="T") {
+    temp$Type[c]<-"tepsin"
+  }
+  else {
+    temp$Type[c]<-"AP4E1"
+  }
+  
+}
+temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
+```
+
+#Logic checks to ensure data is used only from properly segmented cells
+*DEVELOP*
+
+
+
+To fill Golgi ATG9Aint with 0 values for quantification:
+This function will replace NA rows in the SumGolATG9A column with 0 so they will be acknowledged in the data analysis
+```{r}
+temp[is.na(temp[,3]),3]<-0
+```
+
+
+
+
+#Data calculation operations
+
+Calculate the ratio of Golgi localized ATG9A relative to whole cell measurement
+```{r}
+temp$PercGolATG9<-NA
+ntemp<-nrow(temp)
+
+for (i in 1:ntemp) {
+  temp[i,8]<-(temp[i,3]/temp[i,4])*100
+}
+```
