@@ -1,0 +1,58 @@
+---
+title: "20-Graph-Data"
+output: html_notebook
+---
+
+---
+*Optional to subset data*
+```{r}
+subsetCA<-tidy2[tidy2$Type == "Control" | tidy2$Type == "AP4E1",]
+
+```
+
+
+boxplots- Windows save file pathing
+*filepathing is written for Windows*
+```{r}
+temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
+temp$BvsS<-factor(temp$BvsS, levels=c("Basal", "Starved"))
+
+#library(ggplot2)
+#install.packages("remotes")
+#remotes::install_github("coolbutuseless/ggpattern")
+#library(ggpattern)
+#library(viridis)
+
+plotme<-function(dat,yaxis,labelme,mytitle){
+   ggplot(dat,aes(x=Type,y=yaxis,fill=Type, pattern=BvsS)) + 
+      #geom_boxplot(width=.7,position = position_dodge(0.9),alpha=0.5, outlier.shape = 20, outlier.size = -1) +
+    #geom_jitter(position = position_jitterdodge(1.4),alpha=.6, color = "grey") +
+    facet_wrap(~BvsS)+
+    geom_jitter(position = position_jitterdodge(1.4),alpha=0.8, color= "dark grey") +
+    stat_boxplot(geom = "errorbar", width = 0.4) +
+    geom_boxplot_pattern(
+    aes(),width=0.7,position = position_dodge(0.9),outlier.shape=NA, alpha=0.5,
+            pattern_spacing = 0.1,
+            pattern_fill = "black",
+            pattern_angle = 25,
+            pattern_density = 0.1,) + 
+    
+        guides(pattern = guide_legend(override.aes = list(fill = "white")),
+        fill = guide_legend(override.aes = list(pattern = "none")))+
+     ylab(labelme)+
+     ggtitle(mytitle)+
+     theme_minimal()+
+     #scale_y_continuous(name=labelme,limits = c(0,50))+
+     theme(plot.title=element_text(hjust=.5))+
+        scale_fill_viridis(discrete=TRUE,end=.85) +
+        scale_color_viridis(discrete=TRUE,end=.85)+
+        scale_pattern_manual(values = c(Basal = "none", Starved = "stripe"))
+  
+}
+
+#tiff(file="./analysis_10Jun21/graphs/RFP-GFP_counts-raW_boxplot_NSW3011_14Jun21.tiff",width=4500,height=3000,res=600)
+plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
+#dev.off()
+
+```
+
