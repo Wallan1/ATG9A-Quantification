@@ -42,7 +42,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-     #scale_y_continuous(name=labelme,limits = c(0,50))+
+     scale_y_continuous(name=labelme,limits = c(0,35))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE,end=.85) +
         scale_color_viridis(discrete=TRUE,end=.85)+
@@ -50,9 +50,9 @@ plotme<-function(dat,yaxis,labelme,mytitle){
   
 }
 
-#tiff(file="./analysis_10Jun21/graphs/RFP-GFP_counts-raW_boxplot_NSW3011_14Jun21.tiff",width=4500,height=3000,res=600)
+tiff(file="./graphs/percGolATG9A_NSW4019_5Jan22.tiff",width=2000,height=3000,res=600)
 plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
-#dev.off()
+dev.off()
 
 ```
 
