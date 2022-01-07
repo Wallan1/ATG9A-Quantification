@@ -29,7 +29,7 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./datasets/NSW4019_3Jan22.csv",header=TRUE)
+temp=read.csv(file="./datasets/NSW4019_6Jan22.csv",header=TRUE)
 temp$BvsS<-"Basal"
 temp$Rep<-1
 nobs=nrow(temp)
@@ -80,7 +80,7 @@ temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
 To fill Golgi ATG9Aint with 0 values for quantification:
 This function will replace NA rows in the SumGolATG9A column with 0 so they will be acknowledged in the data analysis
 ```{r}
-temp[is.na(temp[,3]),3]<-0
+temp[is.na(temp[,4]),4]<-0
 ```
 
 
@@ -94,6 +94,25 @@ temp$PercGolATG9<-NA
 ntemp<-nrow(temp)
 
 for (i in 1:ntemp) {
-  temp[i,8]<-(temp[i,3]/temp[i,4])*100
+  temp[i,9]<-(temp[i,4]/temp[i,5])*100
+}
+```
+
+
+Get Sum of cell counts per type
+```{r}
+tidy2$CellSum<-NA
+ntemp<-nrow(temp)
+
+for (t in c("WT", "Control", "tepsin", "AP4E1")) {
+  for (bs in c("Basal", "Starved")) {
+    for (r in c("1", "2","3")) {
+      for (baf in c("BafAY","BafAN")) {
+      
+       tidy2$CellSum[which(tidy2$Type==t & tidy2$BvsS==bs & tidy2$Rep==r & tidy2$BafA==baf)]<-sum(tidy2$CountedCells[which(tidy2$Type==t & tidy2$BvsS==bs &tidy2$Rep==r & tidy2$BafA==baf)],na.rm = TRUE)
+   
+    }
+  }
+  }
 }
 ```
