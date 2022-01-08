@@ -101,18 +101,16 @@ for (i in 1:ntemp) {
 
 Get Sum of cell counts per type
 ```{r}
-tidy2$CellSum<-NA
+temp$CellSum<-NA
 ntemp<-nrow(temp)
 
 for (t in c("WT", "Control", "tepsin", "AP4E1")) {
   for (bs in c("Basal", "Starved")) {
     for (r in c("1", "2","3")) {
-      for (baf in c("BafAY","BafAN")) {
       
-       tidy2$CellSum[which(tidy2$Type==t & tidy2$BvsS==bs & tidy2$Rep==r & tidy2$BafA==baf)]<-sum(tidy2$CountedCells[which(tidy2$Type==t & tidy2$BvsS==bs &tidy2$Rep==r & tidy2$BafA==baf)],na.rm = TRUE)
+       temp$CellSum[which(temp$Type==t & temp$BvsS==bs & temp$Rep==r)]<-sum(temp$CountedCells[which(temp$Type==t & temp$BvsS==bs & temp$Rep==r)],na.rm = TRUE)
    
     }
   }
   }
-}
 ```
