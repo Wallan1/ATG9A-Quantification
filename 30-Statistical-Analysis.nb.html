@@ -215,9 +215,45 @@ pre code {
 
 
 <!-- rnb-text-begin -->
+<p>Kruskal-Wallis Test of metrics; separate Basal vs Starved analysis *NONPARAMETRIC DATA**multiple replicates*</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jaW5zdGFsbC5wYWNrYWdlcyhcInRpZHl2ZXJzZVwiKVxuI2luc3RhbGwucGFja2FnZXMoXCJnZ3B1YnJcIilcbiNpbnN0YWxsLnBhY2thZ2VzKFwicnN0YXRpeFwiKVxuI2xpYnJhcnkodGlkeXZlcnNlKVxuI2xpYnJhcnkoZ2dwdWJyKVxuI2xpYnJhcnkocnN0YXRpeClcblxuXG5LV19QZXJjR29sQVRHOTwta3J1c2thbF90ZXN0KFBlcmNHb2xBVEc5flR5cGUsIGRhdGE9dGVtcClcbnN1bW1hcnkoS1dfUGVyY0dvbEFURzkpXG5gYGAifQ== -->
+<pre class="r"><code>
+#install.packages(&quot;tidyverse&quot;)
+#install.packages(&quot;ggpubr&quot;)
+#install.packages(&quot;rstatix&quot;)
+#library(tidyverse)
+#library(ggpubr)
+#library(rstatix)
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIjMwLVN0YXRpc3RpY2FsLUFuYWx5c2lzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0K</div>
+
+KW_PercGolATG9&lt;-kruskal_test(PercGolATG9~Type, data=temp)
+summary(KW_PercGolATG9)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAueS4gICAgICAgICAgICAgICAgICBuICAgICAgICAgc3RhdGlzdGljICAgICAgICAgICBkZiAgIFxuIExlbmd0aDoxICAgICAgICAgICBNaW4uICAgOjIyNyAgIE1pbi4gICA6Ny42MzkgICBNaW4uICAgOjMgIFxuIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjIyNyAgIDFzdCBRdS46Ny42MzkgICAxc3QgUXUuOjMgIFxuIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjIyNyAgIE1lZGlhbiA6Ny42MzkgICBNZWRpYW4gOjMgIFxuICAgICAgICAgICAgICAgICAgICBNZWFuICAgOjIyNyAgIE1lYW4gICA6Ny42MzkgICBNZWFuICAgOjMgIFxuICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjIyNyAgIDNyZCBRdS46Ny42MzkgICAzcmQgUXUuOjMgIFxuICAgICAgICAgICAgICAgICAgICBNYXguICAgOjIyNyAgIE1heC4gICA6Ny42MzkgICBNYXguICAgOjMgIFxuICAgICAgIHAgICAgICAgICAgICAgbWV0aG9kICAgICAgICAgXG4gTWluLiAgIDowLjA1NDEgICBMZW5ndGg6MSAgICAgICAgICBcbiAxc3QgUXUuOjAuMDU0MSAgIENsYXNzIDpjaGFyYWN0ZXIgIFxuIE1lZGlhbiA6MC4wNTQxICAgTW9kZSAgOmNoYXJhY3RlciAgXG4gTWVhbiAgIDowLjA1NDEgICAgICAgICAgICAgICAgICAgICBcbiAzcmQgUXUuOjAuMDU0MSAgICAgICAgICAgICAgICAgICAgIFxuIE1heC4gICA6MC4wNTQxICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
+<pre><code>     .y.                  n         statistic           df   
+ Length:1           Min.   :227   Min.   :7.639   Min.   :3  
+ Class :character   1st Qu.:227   1st Qu.:7.639   1st Qu.:3  
+ Mode  :character   Median :227   Median :7.639   Median :3  
+                    Mean   :227   Mean   :7.639   Mean   :3  
+                    3rd Qu.:227   3rd Qu.:7.639   3rd Qu.:3  
+                    Max.   :227   Max.   :7.639   Max.   :3  
+       p             method         
+ Min.   :0.0541   Length:1          
+ 1st Qu.:0.0541   Class :character  
+ Median :0.0541   Mode  :character  
+ Mean   :0.0541                     
+ 3rd Qu.:0.0541                     
+ Max.   :0.0541                     </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZHRfUGVyY0dvbEFURzk8LWR1bm5fdGVzdChQZXJjR29sQVRHOX5UeXBlLCBkYXRhPXRlbXAsIHAuYWRqdXN0Lm1ldGhvZCA9IFwiYm9uZmVycm9uaVwiKVxuXG5cbmBgYCJ9 -->
+<pre class="r"><code>dt_PercGolATG9&lt;-dunn_test(PercGolATG9~Type, data=temp, p.adjust.method = &quot;bonferroni&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIjMwLVN0YXRpc3RpY2FsLUFuYWx5c2lzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KS3J1c2thbC1XYWxsaXMgVGVzdCBvZiBtZXRyaWNzOyBzZXBhcmF0ZSBCYXNhbCB2cyBTdGFydmVkIGFuYWx5c2lzDQoqTk9OUEFSQU1FVFJJQyBEQVRBKiptdWx0aXBsZSByZXBsaWNhdGVzKg0KYGBge3J9DQoNCiNpbnN0YWxsLnBhY2thZ2VzKCJ0aWR5dmVyc2UiKQ0KI2luc3RhbGwucGFja2FnZXMoImdncHViciIpDQojaW5zdGFsbC5wYWNrYWdlcygicnN0YXRpeCIpDQojbGlicmFyeSh0aWR5dmVyc2UpDQojbGlicmFyeShnZ3B1YnIpDQojbGlicmFyeShyc3RhdGl4KQ0KDQoNCktXX1BlcmNHb2xBVEc5PC1rcnVza2FsX3Rlc3QoUGVyY0dvbEFURzl+VHlwZSwgZGF0YT10ZW1wKQ0Kc3VtbWFyeShLV19QZXJjR29sQVRHOSkNCmR0X1BlcmNHb2xBVEc5PC1kdW5uX3Rlc3QoUGVyY0dvbEFURzl+VHlwZSwgZGF0YT10ZW1wLCBwLmFkanVzdC5tZXRob2QgPSAiYm9uZmVycm9uaSIpDQoNCg0KYGBg</div>
 
 
 

@@ -3,3 +3,21 @@ title: "30-Statistical-Analysis"
 output: html_notebook
 ---
 
+Kruskal-Wallis Test of metrics; separate Basal vs Starved analysis
+*NONPARAMETRIC DATA**multiple replicates*
+```{r}
+
+#install.packages("tidyverse")
+#install.packages("ggpubr")
+#install.packages("rstatix")
+#library(tidyverse)
+#library(ggpubr)
+#library(rstatix)
+
+
+KW_PercGolATG9<-kruskal_test(PercGolATG9~Type, data=temp)
+summary(KW_PercGolATG9)
+dt_PercGolATG9<-dunn_test(PercGolATG9~Type, data=temp, p.adjust.method = "bonferroni")
+
+
+```
