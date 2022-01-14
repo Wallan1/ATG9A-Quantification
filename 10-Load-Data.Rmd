@@ -29,7 +29,7 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./datasets/NSW4019_6Jan22.csv",header=TRUE)
+temp=read.csv(file="./datasets/NSW4019_13Jan22.csv",header=TRUE)
 temp$BvsS<-"Basal"
 temp$Rep<-1
 nobs=nrow(temp)
@@ -55,13 +55,13 @@ ntemp<-nrow(temp)
 
 
 for (c in 1:ntemp) {
-  if (substr(temp[c,1],29,29)=="W") {
+  if (substr(temp[c,1],30,30)=="W") {
     temp$Type[c]<-"WT"
   }
-  else if (substr(temp[c,1],29,29)=="C") {
+  else if (substr(temp[c,1],30,30)=="C") {
     temp$Type[c]<-"Control"
   }
-  else if (substr(temp[c,1],29,29)=="T") {
+  else if (substr(temp[c,1],30,30)=="T") {
     temp$Type[c]<-"tepsin"
   }
   else {
@@ -94,7 +94,7 @@ temp$PercGolATG9<-NA
 ntemp<-nrow(temp)
 
 for (i in 1:ntemp) {
-  temp[i,9]<-(temp[i,4]/temp[i,5])*100
+  temp[i,10]<-(temp[i,4]/temp[i,5])*100
 }
 ```
 
