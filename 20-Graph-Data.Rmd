@@ -17,11 +17,11 @@ boxplots- Windows save file pathing
 temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
 temp$BvsS<-factor(temp$BvsS, levels=c("Basal", "Starved"))
 
-library(ggplot2)
-install.packages("remotes")
+#library(ggplot2)
+#install.packages("remotes")
 #remotes::install_github("coolbutuseless/ggpattern")
-library(ggpattern)
-library(viridis)
+#library(ggpattern)
+#library(viridis)
 
 plotme<-function(dat,yaxis,labelme,mytitle){
    ggplot(dat,aes(x=Type,y=yaxis,fill=Type, pattern=BvsS)) + 
@@ -42,7 +42,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-     #scale_y_continuous(name=labelme,limits = c(0,35))+
+     #scale_y_continuous(name=labelme,limits = c(0,1))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE,end=.85) +
         scale_color_viridis(discrete=TRUE,end=.85)+
@@ -54,9 +54,9 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #dev.off()
 
-tiff(file="./graphs/PCC-ATG9A_NSW4019_13Jan22.tiff",width=2000,height=3000,res=600)
+#tiff(file="./graphs/PCC-ATG9A_NSW4019_0-1scale_13Jan22.tiff",width=2000,height=3000,res=600)
 plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
-dev.off()
+#dev.off()
 
 ```
 
