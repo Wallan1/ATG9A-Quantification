@@ -393,7 +393,7 @@ for (i in 1:ntemp) {
 <p>Get Sum of cell counts per type</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcCRDZWxsU3VtPC1OQVxubnRlbXA8LW5yb3codGVtcClcblxuZm9yICh0IGluIGMoXCJXVFwiLCBcIkNvbnRyb2xcIiwgXCJ0ZXBzaW5cIiwgXCJBUDRFMVwiKSkge1xuICBmb3IgKGJzIGluIGMoXCJCYXNhbFwiLCBcIlN0YXJ2ZWRcIikpIHtcbiAgICBmb3IgKHIgaW4gYyhcIjFcIiwgXCIyXCIsXCIzXCIpKSB7XG4gICAgICBcbiAgICAgICB0ZW1wJENlbGxTdW1bd2hpY2godGVtcCRUeXBlPT10ICYgdGVtcCRCdnNTPT1icyAmIHRlbXAkUmVwPT1yKV08LXN1bSh0ZW1wJENvdW50ZWRDZWxsc1t3aGljaCh0ZW1wJFR5cGU9PXQgJiB0ZW1wJEJ2c1M9PWJzICYgdGVtcCRSZXA9PXIpXSxuYS5ybSA9IFRSVUUpXG4gICBcbiAgICB9XG4gIH1cbiAgfVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcCRDZWxsU3VtPC1OQVxubnRlbXA8LW5yb3codGVtcClcblxuZm9yICh0IGluIGMoXCJXVFwiLCBcIkNvbnRyb2xcIiwgXCJ0ZXBzaW5cIiwgXCJBUDRFMVwiKSkge1xuICBmb3IgKGJzIGluIGMoXCJCYXNhbFwiLCBcIlN0YXJ2ZWRcIikpIHtcbiAgICBmb3IgKHIgaW4gYyhcIjFcIiwgXCIyXCIsXCIzXCIpKSB7XG4gICAgICBcbiAgICAgICB0ZW1wJENlbGxTdW1bd2hpY2godGVtcCRUeXBlPT10ICYgdGVtcCRCdnNTPT1icyAmIHRlbXAkUmVwPT1yKV08LXN1bSh0ZW1wJFNlZ0NlbGxDb3VudFt3aGljaCh0ZW1wJFR5cGU9PXQgJiB0ZW1wJEJ2c1M9PWJzICYgdGVtcCRSZXA9PXIpXSxuYS5ybSA9IFRSVUUpXG4gICBcbiAgICB9XG4gIH1cbiAgfVxuYGBgIn0= -->
 <pre class="r"><code>temp$CellSum&lt;-NA
 ntemp&lt;-nrow(temp)
 
@@ -401,7 +401,7 @@ for (t in c(&quot;WT&quot;, &quot;Control&quot;, &quot;tepsin&quot;, &quot;AP4E1
   for (bs in c(&quot;Basal&quot;, &quot;Starved&quot;)) {
     for (r in c(&quot;1&quot;, &quot;2&quot;,&quot;3&quot;)) {
       
-       temp$CellSum[which(temp$Type==t &amp; temp$BvsS==bs &amp; temp$Rep==r)]&lt;-sum(temp$CountedCells[which(temp$Type==t &amp; temp$BvsS==bs &amp; temp$Rep==r)],na.rm = TRUE)
+       temp$CellSum[which(temp$Type==t &amp; temp$BvsS==bs &amp; temp$Rep==r)]&lt;-sum(temp$SegCellCount[which(temp$Type==t &amp; temp$BvsS==bs &amp; temp$Rep==r)],na.rm = TRUE)
    
     }
   }
