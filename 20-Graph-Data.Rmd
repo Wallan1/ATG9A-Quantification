@@ -80,3 +80,35 @@ plotme(temp,temp$nonGolATG9MaxInt, "fluorescence intensity","non-Golgi ATG9A Max
 
 ```
 
+histograms- Windows save file pathing
+*filepathing is written for Windows*
+```{r}
+temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
+
+
+#library(ggplot2)
+#install.packages("remotes")
+#remotes::install_github("coolbutuseless/ggpattern")
+#library(ggpattern)
+#library(viridis)
+
+plotme<-function(dat,xaxis,labelme,mytitle){
+  
+    ggplot(dat,aes(x=xaxis,fill=Type)) +
+    geom_histogram(color="#424949", binwidth=100, alpha=0.5) +
+    facet_wrap(~Type)+
+    #scale_x_continuous(limits =c(,))+
+     xlab(labelme)+
+    ggtitle(mytitle)+
+    theme_minimal()+
+    #theme(plot.title=element_text(hjust=.5))
+      scale_fill_viridis(discrete=TRUE,end=.85)
+        #scale_color_viridis(discrete=TRUE,end=.85)+
+        
+}
+
+#tiff(file="./graphs/nonGolATG9MaxInt_hist_NSW4022_15Feb22.tiff",width=4000,height=3000,res=600)
+plotme(temp,temp$nonGolATG9MaxInt, "fluorescence intensity (a.u.)","non-Golgi ATG9A Max Intensity")
+#dev.off()
+
+```
