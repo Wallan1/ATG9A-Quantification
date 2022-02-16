@@ -29,9 +29,9 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./datasets/NSW4022_11Feb22.csv",header=TRUE)
+temp=read.csv(file="./datasets/NSW4020_11Feb22.csv",header=TRUE)
 temp$BvsS<-"Basal"
-temp$Rep<-2
+temp$Rep<-1
 nobs=nrow(temp)
 for (i in 1:nobs) {
   if (temp[i,1]=="") {

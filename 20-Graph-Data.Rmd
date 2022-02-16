@@ -97,7 +97,7 @@ plotme<-function(dat,xaxis,labelme,mytitle){
     ggplot(dat,aes(x=xaxis,fill=Type)) +
     geom_histogram(color="#424949", binwidth=100, alpha=0.5) +
     facet_wrap(~Type)+
-    #scale_x_continuous(limits =c(,))+
+    scale_x_continuous(limits =c(2000,4000))+
      xlab(labelme)+
     ggtitle(mytitle)+
     theme_minimal()+
@@ -107,7 +107,7 @@ plotme<-function(dat,xaxis,labelme,mytitle){
         
 }
 
-#tiff(file="./graphs/nonGolATG9MaxInt_hist_NSW4022_15Feb22.tiff",width=4000,height=3000,res=600)
+#tiff(file="./graphs/nonGolATG9MaxInt_hist_NSW4020-4022_2000-4000_v2_15Feb22.tiff",width=3000,height=3000,res=600)
 plotme(temp,temp$nonGolATG9MaxInt, "fluorescence intensity (a.u.)","non-Golgi ATG9A Max Intensity")
 #dev.off()
 
