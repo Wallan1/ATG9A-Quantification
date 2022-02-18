@@ -112,3 +112,37 @@ plotme(temp,temp$nonGolATG9MaxInt, "fluorescence intensity (a.u.)","non-Golgi AT
 #dev.off()
 
 ```
+
+
+violin plots- Windows save file pathing
+*filepathing is written for Windows*
+```{r}
+temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
+
+
+#library(ggplot2)
+#install.packages("remotes")
+#remotes::install_github("coolbutuseless/ggpattern")
+#library(ggpattern)
+#library(viridis)
+
+plotme<-function(dat,yaxis,labelme,mytitle){
+  
+    ggplot(dat,aes(x=Type,y=yaxis,fill=Type)) +
+    geom_violin(scale="count", width= 1.25, color="#424949", alpha=0.5) +
+    #facet_wrap(~Type)+
+    scale_y_continuous(limits =c(0,4000))+
+     ylab(labelme)+
+    ggtitle(mytitle)+
+    theme_minimal()+
+    #theme(plot.title=element_text(hjust=.5))
+      scale_fill_viridis(discrete=TRUE,end=.85)
+        #scale_color_viridis(discrete=TRUE,end=.85)+
+        
+}
+
+#tiff(file="./graphs/nonGolATG9MaxInt_violin_NSW4020-4022_18Feb22.tiff",width=3000,height=2000,res=600)
+plotme(temp,temp$nonGolATG9MaxInt, "fluorescence intensity (a.u.)","non-Golgi ATG9A Max Intensity")
+#dev.off()
+
+````
