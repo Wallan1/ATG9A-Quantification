@@ -111,7 +111,7 @@ for (i in 1:ntemp) {
   }
   
   if (i==ntemp){
-    if (ncell!=temp[i,4]) {
+    if (!is.na(temp[i,4]) & ncell!=temp[i,4]) {
       rs<-c(rs,i)
     }
   }
