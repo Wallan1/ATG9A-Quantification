@@ -218,11 +218,12 @@ pre code {
 <p>Kruskal-Wallis Test of metrics; separate Basal vs Starved analysis *NONPARAMETRIC DATA**multiple replicates*</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jaW5zdGFsbC5wYWNrYWdlcyhcInRpZHl2ZXJzZVwiKVxuI2luc3RhbGwucGFja2FnZXMoXCJnZ3B1YnJcIilcbiNpbnN0YWxsLnBhY2thZ2VzKFwicnN0YXRpeFwiKVxuI2xpYnJhcnkodGlkeXZlcnNlKVxuI2xpYnJhcnkoZ2dwdWJyKVxuI2xpYnJhcnkocnN0YXRpeClcblxuXG5LV19QZXJjR29sQVRHOTwta3J1c2thbF90ZXN0KFBlcmNHb2xBVEc5flR5cGUsIGRhdGE9dGVtcClcbnN1bW1hcnkoS1dfUGVyY0dvbEFURzkpXG5gYGAifQ== -->
-<pre class="r"><code>
-#install.packages(&quot;tidyverse&quot;)
-#install.packages(&quot;ggpubr&quot;)
-#install.packages(&quot;rstatix&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuXG4jaW5zdGFsbC5wYWNrYWdlcyhcXHRpZHl2ZXJzZVxcKVxuI2luc3RhbGwucGFja2FnZXMoXFxnZ3B1YnJcXClcbiNpbnN0YWxsLnBhY2thZ2VzKFxccnN0YXRpeFxcKVxuI2xpYnJhcnkodGlkeXZlcnNlKVxuI2xpYnJhcnkoZ2dwdWJyKVxuI2xpYnJhcnkocnN0YXRpeClcblxuXG5LV19QZXJjR29sQVRHOTwta3J1c2thbF90ZXN0KFBlcmNHb2xBVEc5flR5cGUsIGRhdGE9dGVtcClcbnN1bW1hcnkoS1dfUGVyY0dvbEFURzkpXG5gYGBcbmBgYCJ9 -->
+<pre class="r"><code>```r
+
+#install.packages(\tidyverse\)
+#install.packages(\ggpubr\)
+#install.packages(\rstatix\)
 #library(tidyverse)
 #library(ggpubr)
 #library(rstatix)
@@ -230,30 +231,41 @@ pre code {
 
 KW_PercGolATG9&lt;-kruskal_test(PercGolATG9~Type, data=temp)
 summary(KW_PercGolATG9)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAueS4gICAgICAgICAgICAgICAgICBuICAgICAgICAgc3RhdGlzdGljICAgICAgICAgICBkZiAgIFxuIExlbmd0aDoxICAgICAgICAgICBNaW4uICAgOjIyNyAgIE1pbi4gICA6Ny42MzkgICBNaW4uICAgOjMgIFxuIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjIyNyAgIDFzdCBRdS46Ny42MzkgICAxc3QgUXUuOjMgIFxuIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjIyNyAgIE1lZGlhbiA6Ny42MzkgICBNZWRpYW4gOjMgIFxuICAgICAgICAgICAgICAgICAgICBNZWFuICAgOjIyNyAgIE1lYW4gICA6Ny42MzkgICBNZWFuICAgOjMgIFxuICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjIyNyAgIDNyZCBRdS46Ny42MzkgICAzcmQgUXUuOjMgIFxuICAgICAgICAgICAgICAgICAgICBNYXguICAgOjIyNyAgIE1heC4gICA6Ny42MzkgICBNYXguICAgOjMgIFxuICAgICAgIHAgICAgICAgICAgICAgbWV0aG9kICAgICAgICAgXG4gTWluLiAgIDowLjA1NDEgICBMZW5ndGg6MSAgICAgICAgICBcbiAxc3QgUXUuOjAuMDU0MSAgIENsYXNzIDpjaGFyYWN0ZXIgIFxuIE1lZGlhbiA6MC4wNTQxICAgTW9kZSAgOmNoYXJhY3RlciAgXG4gTWVhbiAgIDowLjA1NDEgICAgICAgICAgICAgICAgICAgICBcbiAzcmQgUXUuOjAuMDU0MSAgICAgICAgICAgICAgICAgICAgIFxuIE1heC4gICA6MC4wNTQxICAgICAgICAgICAgICAgICAgICAgXG4ifQ== -->
-<pre><code>     .y.                  n         statistic           df   
- Length:1           Min.   :227   Min.   :7.639   Min.   :3  
- Class :character   1st Qu.:227   1st Qu.:7.639   1st Qu.:3  
- Mode  :character   Median :227   Median :7.639   Median :3  
-                    Mean   :227   Mean   :7.639   Mean   :3  
-                    3rd Qu.:227   3rd Qu.:7.639   3rd Qu.:3  
-                    Max.   :227   Max.   :7.639   Max.   :3  
-       p             method         
- Min.   :0.0541   Length:1          
- 1st Qu.:0.0541   Class :character  
- Median :0.0541   Mode  :character  
- Mean   :0.0541                     
- 3rd Qu.:0.0541                     
- Max.   :0.0541                     </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZHRfUGVyY0dvbEFURzk8LWR1bm5fdGVzdChQZXJjR29sQVRHOX5UeXBlLCBkYXRhPXRlbXAsIHAuYWRqdXN0Lm1ldGhvZCA9IFwiYm9uZmVycm9uaVwiKVxuXG5cbmBgYCJ9 -->
-<pre class="r"><code>dt_PercGolATG9&lt;-dunn_test(PercGolATG9~Type, data=temp, p.adjust.method = &quot;bonferroni&quot;)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiICAgICAueS4gICAgICAgICAgICAgICAgICBuICAgICAgICAgc3RhdGlzdGljICAgICAgICAgICBkZiAgIFxuIExlbmd0aDoxICAgICAgICAgICBNaW4uICAgOjIyNyAgIE1pbi4gICA6Ny42MzkgICBNaW4uICAgOjMgIFxuIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjIyNyAgIDFzdCBRdS46Ny42MzkgICAxc3QgUXUuOjMgIFxuIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjIyNyAgIE1lZGlhbiA6Ny42MzkgICBNZWRpYW4gOjMgIFxuICAgICAgICAgICAgICAgICAgICBNZWFuICAgOjIyNyAgIE1lYW4gICA6Ny42MzkgICBNZWFuICAgOjMgIFxuICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjIyNyAgIDNyZCBRdS46Ny42MzkgICAzcmQgUXUuOjMgIFxuICAgICAgICAgICAgICAgICAgICBNYXguICAgOjIyNyAgIE1heC4gICA6Ny42MzkgICBNYXguICAgOjMgIFxuICAgICAgIHAgICAgICAgICAgICAgbWV0aG9kICAgICAgICAgXG4gTWluLiAgIDowLjA1NDEgICBMZW5ndGg6MSAgICAgICAgICBcbiAxc3QgUXUuOjAuMDU0MSAgIENsYXNzIDpjaGFyYWN0ZXIgIFxuIE1lZGlhbiA6MC4wNTQxICAgTW9kZSAgOmNoYXJhY3RlciAgXG4gTWVhbiAgIDowLjA1NDEgICAgICAgICAgICAgICAgICAgICBcbiAzcmQgUXUuOjAuMDU0MSAgICAgICAgICAgICAgICAgICAgIFxuIE1heC4gICA6MC4wNTQxICAgICAgICAgICAgICAgICAgICAgXG4ifQ== --&gt;
 </code></pre>
+<pre><code> .y.                  n         statistic           df   </code></pre>
+<p>Length:1 Min. :227 Min. :7.639 Min. :3<br />
+Class :character 1st Qu.:227 1st Qu.:7.639 1st Qu.:3<br />
+Mode :character Median :227 Median :7.639 Median :3<br />
+Mean :227 Mean :7.639 Mean :3<br />
+3rd Qu.:227 3rd Qu.:7.639 3rd Qu.:3<br />
+Max. :227 Max. :7.639 Max. :3<br />
+p method<br />
+Min. :0.0541 Length:1<br />
+1st Qu.:0.0541 Class :character<br />
+Median :0.0541 Mode :character<br />
+Mean :0.0541<br />
+3rd Qu.:0.0541<br />
+Max. :0.0541</p>
+<pre><code>
+
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZHRfUGVyY0dvbEFURzk8LWR1bm5fdGVzdChQZXJjR29sQVRHOX5UeXBlLCBkYXRhPXRlbXAsIHAuYWRqdXN0Lm1ldGhvZCA9IFxcYm9uZmVycm9uaVxcKVxuXG5cbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+dt_PercGolATG9&lt;-dunn_test(PercGolATG9~Type, data=temp, p.adjust.method = \bonferroni\)
+</code></pre>
+<p>```</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIjMwLVN0YXRpc3RpY2FsLUFuYWx5c2lzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpLcnVza2FsLVdhbGxpcyBUZXN0IG9mIG1ldHJpY3M7IHNlcGFyYXRlIEJhc2FsIHZzIFN0YXJ2ZWQgYW5hbHlzaXMNCipOT05QQVJBTUVUUklDIERBVEEqKm11bHRpcGxlIHJlcGxpY2F0ZXMqDQpgYGB7cn0NCg0KaW5zdGFsbC5wYWNrYWdlcygidGlkeXZlcnNlIikNCmluc3RhbGwucGFja2FnZXMoImdncHViciIpDQppbnN0YWxsLnBhY2thZ2VzKCJyc3RhdGl4IikNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShnZ3B1YnIpDQpsaWJyYXJ5KHJzdGF0aXgpDQoNCg0KS1dfUGVyY0dvbEFURzk8LWtydXNrYWxfdGVzdChQZXJjR29sQVRHOX5UeXBlLCBkYXRhPXRlbXApDQpzdW1tYXJ5KEtXX1BlcmNHb2xBVEc5KQ0KZHRfUGVyY0dvbEFURzk8LWR1bm5fdGVzdChQZXJjR29sQVRHOX5UeXBlLCBkYXRhPXRlbXAsIHAuYWRqdXN0Lm1ldGhvZCA9ICJib25mZXJyb25pIikNCg0KDQpgYGA=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIjMwLVN0YXRpc3RpY2FsLUFuYWx5c2lzIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpLcnVza2FsLVdhbGxpcyBUZXN0IG9mIG1ldHJpY3M7IHNlcGFyYXRlIEJhc2FsIHZzIFN0YXJ2ZWQgYW5hbHlzaXMNCipOT05QQVJBTUVUUklDIERBVEEqKm11bHRpcGxlIHJlcGxpY2F0ZXMqDQpgYGB7cn0NCg0KaW5zdGFsbC5wYWNrYWdlcygidGlkeXZlcnNlIikNCmluc3RhbGwucGFja2FnZXMoImdncHViciIpDQppbnN0YWxsLnBhY2thZ2VzKCJyc3RhdGl4IikNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShnZ3B1YnIpDQpsaWJyYXJ5KHJzdGF0aXgpDQoNCg0KS1dfTTE8LWtydXNrYWxfdGVzdChNYW5kZXJzTTF+VHlwZSwgZGF0YT10ZW1wKQ0Kc3VtbWFyeShLV19NMSkNCmR0X00xPC1kdW5uX3Rlc3QoTWFuZGVyc00xflR5cGUsIGRhdGE9dGVtcCwgcC5hZGp1c3QubWV0aG9kID0gImJvbmZlcnJvbmkiKQ0KDQpLV19NMjwta3J1c2thbF90ZXN0KE1hbmRlcnNNMn5UeXBlLCBkYXRhPXRlbXApDQpzdW1tYXJ5KEtXX00yKQ0KZHRfTTI8LWR1bm5fdGVzdChNYW5kZXJzTTJ+VHlwZSwgZGF0YT10ZW1wLCBwLmFkanVzdC5tZXRob2QgPSAiYm9uZmVycm9uaSIpDQoNCktXX25vbkdvbFZvbDwta3J1c2thbF90ZXN0KG5vbkdvbEFURzlWb2x+VHlwZSwgZGF0YT10ZW1wKQ0Kc3VtbWFyeShLV19ub25Hb2xWb2wpDQpkdF9ub25Hb2xWb2w8LWR1bm5fdGVzdChub25Hb2xBVEc5Vm9sflR5cGUsIGRhdGE9dGVtcCwgcC5hZGp1c3QubWV0aG9kID0gImJvbmZlcnJvbmkiKQ0KDQpLV19ub25Hb2xNYXhJbnQ8LWtydXNrYWxfdGVzdChub25Hb2xBVEc5TWF4SW50flR5cGUsIGRhdGE9dGVtcCkNCnN1bW1hcnkoS1dfbm9uR29sTWF4SW50KQ0KZHRfbm9uR29sTWF4SW50PC1kdW5uX3Rlc3Qobm9uR29sQVRHOU1heEludH5UeXBlLCBkYXRhPXRlbXAsIHAuYWRqdXN0Lm1ldGhvZCA9ICJib25mZXJyb25pIikNCmBgYA==</div>
 
 
 

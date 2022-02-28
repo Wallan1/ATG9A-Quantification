@@ -16,9 +16,19 @@ library(ggpubr)
 library(rstatix)
 
 
-KW_PercGolATG9<-kruskal_test(PercGolATG9~Type, data=temp)
-summary(KW_PercGolATG9)
-dt_PercGolATG9<-dunn_test(PercGolATG9~Type, data=temp, p.adjust.method = "bonferroni")
+KW_M1<-kruskal_test(MandersM1~Type, data=temp)
+summary(KW_M1)
+dt_M1<-dunn_test(MandersM1~Type, data=temp, p.adjust.method = "bonferroni")
 
+KW_M2<-kruskal_test(MandersM2~Type, data=temp)
+summary(KW_M2)
+dt_M2<-dunn_test(MandersM2~Type, data=temp, p.adjust.method = "bonferroni")
 
+KW_nonGolVol<-kruskal_test(nonGolATG9Vol~Type, data=temp)
+summary(KW_nonGolVol)
+dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=temp, p.adjust.method = "bonferroni")
+
+KW_nonGolMaxInt<-kruskal_test(nonGolATG9MaxInt~Type, data=temp)
+summary(KW_nonGolMaxInt)
+dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=temp, p.adjust.method = "bonferroni")
 ```
