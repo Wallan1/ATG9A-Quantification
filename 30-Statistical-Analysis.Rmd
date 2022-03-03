@@ -24,6 +24,14 @@ KW_M2<-kruskal_test(MandersM2~Type, data=temp)
 summary(KW_M2)
 dt_M2<-dunn_test(MandersM2~Type, data=temp, p.adjust.method = "bonferroni")
 
+KW_MOC<-kruskal_test(MandersMOC~Type, data=temp)
+summary(KW_MOC)
+dt_MOC<-dunn_test(MandersMOC~Type, data=temp, p.adjust.method = "bonferroni")
+
+KW_PCC<-kruskal_test(PearsonCoeff~Type, data=temp)
+summary(KW_PCC)
+dt_PCC<-dunn_test(PearsonCoeff~Type, data=temp, p.adjust.method = "bonferroni")
+
 KW_nonGolVol<-kruskal_test(nonGolATG9Vol~Type, data=temp)
 summary(KW_nonGolVol)
 dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=temp, p.adjust.method = "bonferroni")
@@ -31,4 +39,8 @@ dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=temp, p.adjust.method = "bonfer
 KW_nonGolMaxInt<-kruskal_test(nonGolATG9MaxInt~Type, data=temp)
 summary(KW_nonGolMaxInt)
 dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=temp, p.adjust.method = "bonferroni")
+
+KW_GolMaxInt<-kruskal_test(GolATG9MaxInt~Type, data=temp)
+summary(KW_GolMaxInt)
+dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=temp, p.adjust.method = "bonferroni")
 ```
