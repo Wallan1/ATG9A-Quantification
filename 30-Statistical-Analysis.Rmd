@@ -43,4 +43,27 @@ dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=temp, p.adjust.method = "
 KW_GolMaxInt<-kruskal_test(GolATG9MaxInt~Type, data=temp)
 summary(KW_GolMaxInt)
 dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=temp, p.adjust.method = "bonferroni")
+
+KW_nonGolMaxIntCell<-kruskal_test(AveATG9MaxIntPerCell~Type, data=tidy)
+summary(KW_nonGolMaxIntCell)
+dt_nonGolMaxIntCell<-dunn_test(AveATG9MaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+
+KW_nonGolVolCell<-kruskal_test(AveATG9VolPerCell~Type, data=tidy)
+summary(KW_nonGolVolCell)
+dt_nonGolVolCell<-dunn_test(AveATG9VolPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+
+KW_GolMaxIntCell<-kruskal_test(AveATG9gMaxIntPerCell~Type, data=tidy)
+summary(KW_GolMaxIntCell)
+dt_GolMaxIntCell<-dunn_test(AveATG9gMaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+```
+
+
+R-bind and export results from Kruskal-Wallis and Dunn test
+```{r}
+Dunn_ATG9<-rbind(dt_M1,dt_M2,dt_MOC,dt_PCC,dt_nonGolVol,dt_nonGolMaxInt,dt_GolMaxInt,dt_nonGolMaxIntCell,dt_nonGolVolCell,dt_GolMaxIntCell)
+
+
+
+write.csv(Dunn_ATG9, file= "./stats/Dunn_ATG9_4019-4020-4022-4026_3Mar22.csv")
+
 ```

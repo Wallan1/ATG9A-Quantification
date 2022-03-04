@@ -6,7 +6,7 @@ output: html_notebook
 ---
 *Optional to subset data*
 ```{r}
-subsetCTA<-temp[temp$Type == "Control" | temp$Type == "tepsin" | temp$Type == "AP4E1",]
+subsetCTA<-tidy[tidy$Type == "Control" | tidy$Type == "tepsin" | tidy$Type == "AP4E1",]
 
 ```
 
@@ -42,7 +42,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-     #scale_y_continuous(name=labelme,limits = c(0,20))+
+     scale_y_continuous(name=labelme,limits = c(0.25,1.0))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE,end=.85) +
         scale_color_viridis(discrete=TRUE,end=.85)+
@@ -51,35 +51,47 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 }
 
 #tiff(file="./graphs/percGolATG9A_NSW4019_3Mar22.tiff",width=2000,height=3000,res=600)
-plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
+#plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #dev.off()
 
-#tiff(file="./graphs/MOC_NSW4019_3Mar22.tiff",width=2000,height=3000,res=600)
+tiff(file="./graphs/cleaned-CTA/MOC_CTA_NSW4019-4020-4022-4026_adjY_3Mar22.tiff",width=2000,height=3000,res=600)
 plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
-#dev.off()
+dev.off()
 
-#tiff(file="./graphs/M1_NSW4019_3Mar22.tiff",width=1800,height=2500,res=600)
+#tiff(file="./graphs/cleaned-CTA/M1_CTA_NSW4019-4020-4022-4026_adjY_3Mar22.tiff",width=1800,height=2500,res=600)
 plotme(temp,temp$MandersM1, "M1: ATG9 in TGN","")
 #dev.off()
 
-#tiff(file="./graphs/M2_NSW4019_3Mar22.tiff",width=1800,height=2500,res=600)
+#tiff(file="./graphs/cleaned-CTA/M2_CTA_NSW4019-4020-4022-4026_adjY_3Mar22.tiff",width=1800,height=2500,res=600)
 plotme(temp,temp$MandersM2, "M2: TGN in ATG9","")
 #dev.off()
 
-#tiff(file="./graphs/PCC-ATG9A_NSW4019_3Mar22.tiff",width=2000,height=3000,res=600)
-plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
+#tiff(file="./graphs/cleaned-CTA/PCC-ATG9A_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=2000,height=3000,res=600)
+#plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
 #dev.off()
 
-#tiff(file="./graphs/nonGolATG9Vol_NSW4019_3Mar22.tiff",width=1800,height=2500,res=600)
-plotme(temp,temp$nonGolATG9Vol, "object volume","non-Golgi ATG9A volume")
+#tiff(file="./graphs/cleaned-CTA/nonGolATG9Vol_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=1800,height=2500,res=600)
+#plotme(temp,temp$nonGolATG9Vol, "object volume","non-Golgi ATG9A volume")
 #dev.off()
 
-#tiff(file="./graphs/nonGolATG9MaxInt_NSW4019_3Mar22.tiff",width=2000,height=3000,res=600)
-plotme(temp,temp$nonGolATG9MaxInt, "fluorescence intensity","non-Golgi ATG9A Max Intensity")
+#tiff(file="./graphs/cleaned-CTA/nonGolATG9MaxInt_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=2000,height=3000,res=600)
+#plotme(temp,temp$nonGolATG9MaxInt, "fluorescence intensity","non-Golgi ATG9A Max Intensity")
 #dev.off()
 
-#tiff(file="./graphs/GolATG9MaxInt_NSW4019_3Mar22.tiff",width=2000,height=3000,res=600)
-plotme(temp,temp$GolATG9MaxInt, "fluorescence intensity","Golgi ATG9A Max Intensity")
+#tiff(file="./graphs/cleaned-CTA/GolATG9MaxInt_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=2000,height=3000,res=600)
+#plotme(temp,temp$GolATG9MaxInt, "fluorescence intensity","Golgi ATG9A Max Intensity")
+#dev.off()
+
+#tiff(file="./graphs/cleaned-CTA/nonGolATG9Vol-perCell_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=1800,height=2500,res=600)
+#plotme(tidy,tidy$AveATG9VolPerCell, "average object volume/cell","Average non-Golgi ATG9A volume/cell")
+#dev.off()
+
+#tiff(file="./graphs/cleaned-CTA/nonGolATG9MaxInt-perCell_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=2000,height=3000,res=600)
+#plotme(tidy,tidy$AveATG9MaxIntPerCell, "fluorescence intensity","Average non-Golgi ATG9A Max Intensity/cell")
+#dev.off()
+
+#tiff(file="./graphs/cleaned-CTA/GolATG9MaxInt-perCell_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=2000,height=3000,res=600)
+#plotme(tidy,tidy$AveATG9gMaxIntPerCell, "fluorescence intensity","Average Golgi ATG9A Max Intensity/cell")
 #dev.off()
 
 ```
@@ -140,7 +152,7 @@ temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
 plotme<-function(dat,yaxis,labelme,mytitle){
   
     ggplot(dat,aes(x=Type,y=yaxis,fill=Type)) +
-    geom_violin(scale="count", width= 1.15, color="#424949", alpha=0.5) +
+    geom_violin(scale="count", width= 1.05, color="#424949", alpha=0.5) +
     geom_boxplot(width=0.2, color="#424949", outlier.shape=NA, alpha=0.2) +
     #facet_wrap(~Type)+
     scale_y_continuous(limits =c(0,4000))+
@@ -153,13 +165,13 @@ plotme<-function(dat,yaxis,labelme,mytitle){
         
 }
 
-#tiff(file="./graphs/nonGolATG9MaxInt_violin-box_NSW4019_3Mar22.tiff",width=3000,height=2500,res=600)
+tiff(file="./graphs/cleaned-CTA/nonGolATG9MaxInt_violin-box_NSW4019-4020-4022-4026_3Mar22.tiff",width=3000,height=2500,res=600)
 plotme(temp, temp$nonGolATG9MaxInt, "fluorescence intensity (a.u.)","non-Golgi ATG9A Max Intensity")
-#dev.off()
+dev.off()
 
-#tiff(file="./graphs/GolATG9MaxInt_violin-box_NSW4019_3Mar22.tiff",width=3000,height=2500,res=600)
+tiff(file="./graphs/cleaned-CTA/GolATG9MaxInt_violin-box_NSW4019-4020-4022-4026_3Mar22.tiff",width=3000,height=2500,res=600)
 plotme(temp, temp$GolATG9MaxInt, "fluorescence intensity (a.u.)","Golgi ATG9A Max Intensity")
-#dev.off()
+dev.off()
 
 #tiff(file="./graphs/nonGolATG9MaxInt_hist_NSW4020-4022_2000-4000_v2_15Feb22.tiff",width=3000,height=3000,res=600)
 #plotme(temp, temp$nonGolATG9Vol, "fluorescence intensity (a.u.)","non-Golgi ATG9A volume")
