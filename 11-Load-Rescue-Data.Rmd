@@ -1,0 +1,236 @@
+---
+title: "11-Load-Rescue-Data"
+output: html_notebook
+---
+
+
+CSV import - *Mac*
+*change input file path*
+```{r}
+testdata=read.csv(file="~/Desktop/29Jun21_analysis/NSW3017_basal_counts_29Jun21.csv",header=TRUE)
+testdata$BvsS<-"Basal"
+testdata$BafA<-"BafAN"
+testdata$Rep<-4
+nobs=nrow(testdata)
+for (i in 1:nobs) {
+  if (testdata[i,1]=="") {
+    testdata[i,1]<-fname
+
+  } 
+  else {
+    fname=testdata[i,1]
+
+  }
+}
+
+```
+
+
+CSV import - *Windows*
+*MUST HAVE FILES IN R PROJECT WD* 
+*change input file path*
+```{r}
+temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4039A_21May22.csv",header=TRUE)
+temp$BvsS<-"Basal"
+temp$Rep<-1
+nobs=nrow(temp)
+for (i in 1:nobs) {
+  if (temp[i,1]=="") {
+    temp[i,1]<-fname
+
+  } 
+  else {
+    fname=temp[i,1]
+
+  }
+}
+
+```
+
+Adding type designation
+*if necessary update substring values based on filename in input document*
+*check capitalization of values*
+```{r}
+temp$Type<-NA
+ntemp<-nrow(temp)
+
+
+for (c in 1:ntemp) {
+  if (substr(temp[c,1],31,31)=="W") {
+    temp$Type[c]<-"WT"
+  }
+  else if (substr(temp[c,1],31,31)=="C") {
+    temp$Type[c]<-"Control"
+  }
+  else if (substr(temp[c,1],31,31)=="T") {
+    temp$Type[c]<-"tepsin"
+  }
+  else {
+    temp$Type[c]<-"AP4E1"
+  }
+  
+}
+temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
+```
+
+#Logic checks to ensure data is used only from properly segmented cells
+Find files where number of Nuclei in segmented cells does not match number of segmented cells:
+
+These files should be evaluated to identify images where cells were not segmented properly. 
+
+```{r}
+ntemp<-nrow(temp)
+temp[,2]<-as.numeric(temp[,2])
+temp[,3]<-as.numeric(temp[,3])
+rs<-c()
+
+for (i in 1:ntemp) {
+  if (!is.na(temp[i,2]) & temp[i,2]!=temp[i,3]) {
+      rs<-c(rs,i)
+    }
+  
+}
+
+badcell1<-data.frame(temp[rs,])
+```
+
+Checking for images where the number of cells with MOC measurements does not match the number of counted cells to validated cell segmentation. All cells should have MOC measurements while not all will have puncta measurements
+```{r}
+ntemp<-nrow(temp)
+temp[,2]<-as.numeric(temp[,2])
+temp[,4]<-as.numeric(temp[,4])
+ncell<-temp[1,2]
+rs<-c()
+
+for (i in 1:ntemp) {
+  if (!is.na(temp[i,2]) & i!=1) {
+    if (!is.na(temp[i-1,4]) & ncell!=temp[i-1,4]) {
+      rs<-c(rs,i-1)
+    }
+    ncell<-temp[i,2]
+  }
+  
+  if (i==ntemp){
+    if (!is.na(temp[i,4]) & ncell!=temp[i,4]) {
+      rs<-c(rs,i)
+    }
+  }
+}
+
+badcell2<-data.frame(temp[rs,])
+```
+
+
+
+#Data calculation operations
+
+Get Sum of cell counts per type
+```{r}
+temp$CellSum<-NA
+ntemp<-nrow(temp)
+
+for (t in c("WT", "Control", "tepsin", "AP4E1")) {
+  for (bs in c("Basal", "Starved")) {
+    for (r in c("1", "2","3", "4")) {
+      
+       temp$CellSum[which(temp$Type==t & temp$BvsS==bs & temp$Rep==r)]<-sum(temp$SegCellCount[which(temp$Type==t & temp$BvsS==bs & temp$Rep==r)],na.rm = TRUE)
+   
+    }
+  }
+  }
+```
+
+
+Calculate the ratio of Golgi localized ATG9A relative to whole cell measurement
+```{r}
+temp$PercGolATG9<-NA
+ntemp<-nrow(temp)
+
+for (i in 1:ntemp) {
+  temp[i,28]<-(temp[i,5]/temp[i,6])*100
+}
+```
+
+
+Getting average values per cell for non-Golgi ATG9 object volume and non-Golgi object max intensity
+
+```{r}
+
+ntemp<-nrow(temp)
+temp[,17]<-as.numeric(temp[,17])
+temp$AveATG9VolPerCell <- NA
+temp$AveATG9MaxIntPerCell <- NA
+
+rs<-c()
+cid<-1
+fname<-temp[1,1]
+for (i in 1:ntemp) {
+  if (!is.na(temp[i,17])){
+    if (temp[i,17]!=cid | temp[i,1]!=fname) {
+      temp$AveATG9VolPerCell[rs]<-mean(temp$nonGolATG9Vol[rs])
+      temp$AveATG9MaxIntPerCell[rs]<-mean(temp$nonGolATG9MaxInt[rs])
+      rs<-c(i)
+      cid<-temp[i,17]
+      fname<-temp[i,1]
+    }
+    else {
+      rs<-c(rs,i)
+    }
+  }
+  if (i==ntemp){
+    temp$AveATG9VolPerCell[rs]<-mean(temp$nonGolATG9Vol[rs])
+    temp$AveATG9MaxIntPerCell[rs]<-mean(temp$nonGolATG9MaxInt[rs])
+  }
+}
+```
+
+Getting average values per cell for Golgi ATG9 object max intensity
+```{r}
+
+ntemp<-nrow(temp)
+temp[,21]<-as.numeric(temp[,21])
+temp$AveATG9gMaxIntPerCell <- NA
+
+rs<-c()
+cid<-1
+fname<-temp[1,1]
+for (i in 1:ntemp) {
+  if (!is.na(temp[i,21])){
+    if (temp[i,21]!=cid | temp[i,1]!=fname) {
+      temp$AveATG9gMaxIntPerCell[rs]<-mean(temp$GolATG9MaxInt[rs])
+      rs<-c(i)
+      cid<-temp[i,21]
+      fname<-temp[i,1]
+    }
+    else {
+      rs<-c(rs,i)
+    }
+  }
+  if (i==ntemp){
+    temp$AveATG9gMaxIntPerCell[rs]<-mean(temp$GolATG9MaxInt[rs])
+  }
+}
+```
+
+Removing unnecessary columns and duplicate rows to have values per cell
+*non-Golgi ATG9 metrics; also renames CellID column to prepare for merging*
+```{r}
+nonGolginoDup<-temp[!duplicated(temp[,c(1,17,30)]),c(1,17,25,26,27,29,30,31)]
+nonGolginoDup<-nonGolginoDup[which(!is.na(nonGolginoDup[,2])),]
+names(nonGolginoDup)[names(nonGolginoDup)=="pCell"]<-"sCellID"
+```
+
+Removing unnecessary columns and duplicate rows to have values per cell
+*Golgi ATG9a max int; also renames CellID column to prepare for merging*
+```{r}
+GolginoDup<-temp[!duplicated(temp[,c(1,21,32)]),c(1,21,25,26,27,32)]
+GolginoDup<-GolginoDup[which(!is.na(GolginoDup[,2])),]
+names(GolginoDup)[names(GolginoDup)=="gCell"]<-"sCellID"
+```
+
+Merging nonGolgi and Golgi cleaned data frames for graphing
+```{r}
+tidy <- merge(nonGolginoDup,GolginoDup, all = TRUE)
+```
+
+
