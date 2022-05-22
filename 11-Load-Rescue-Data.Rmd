@@ -149,43 +149,157 @@ badcell2<-data.frame(temp[rs,])
 ```
 
 
+#Mind max mean Myc value of untransfected cells
+Adjust transfected threshold value based on this max
+```{r}
+print(max(temp$meanMyc[which(substr(temp[c,1],36,38)=="000")]))
+```
+
+
+#Identify transfected cells using Myc signal intensity values
+
+Subset whole cell values and add transfected designation
+Need to add a way to subset dataset to include only transfected cells from conditions other than untransfected (000)
+*add binary designation Yes/No for cells to include*
+```{r}
+#whole cell subset
+whole<-temp[which(!is.na(temp$CellID)),c(1:11,22:25)]
+
+whole$include<-NA
+ntemp<-nrow(whole)
+
+for (c in 1:ntemp) {
+  if (substr(whole[c,1],38,38)=="0") {
+    whole$include[c]<-"Y"
+  }
+  else if (whole$meanMyc[c]>165) {
+    whole$include[c]<-"Y"
+  }
+    
+  else {
+    whole$include[c]<-"N"
+    
+  }
+}
+```
+
+
+
+
+For individual cell value metrics
+```{r}
+ntemp<-nrow(temp)
+
+
+rs2<-temp[which(temp$meanMyc>165),c(1,4,6)]
+
+rs2$pCell<-rs2$CellID
+rs2$pCellmean<-rs2$meanMyc
+rs2<-rs2[,c(-2,-3)]
+
+
+included<-merge(temp,rs2,by=c("Filename","pCell"),all.x = TRUE)
+
+
+rs3<-rs2
+rs3$gCell<-rs2$pCell
+rs3$gCellmean<-rs2$pCellmean
+rs3<-rs3[,c(-2,-3)]
+
+included<-merge(included,rs3,by=c("Filename","gCell"),all.x = TRUE)
+included$include<-NA
+
+for (c in 1:ntemp) {
+  if (substr(included[c,1],36,38)=="000") {
+    included$pinclude[c]<-"Y"
+  }
+  else if (!is.na(included$pCellmean[c]) && included$pCellmean[c]>180)
+ {
+    included$pinclude[c]<-"Y"
+  }
+    
+  else {
+    included$pinclude[c]<-"N"
+  }
+    if (substr(included[c,1],36,38)=="000") {
+    included$ginclude[c]<-"Y"
+  }
+  else if (!is.na(included$gCellmean[c]) && included$gCellmean[c]>180)
+ {
+    included$ginclude[c]<-"Y"
+  }
+    
+  else {
+    included$ginclude[c]<-"N"
+  }
+}
+
+
+```
+
+
+Individual pCell gCell metrics tidy dataset
+```{r}
+pDat<-NA
+pDat<-included[,c(1,22,23,24,25,3,26,29,16,17,18)]
+
+gDat<-NA
+gDat<-included[,c(1,22,23,24,25,2,27,30,19,20,21)]
+```
+
+
+#Subset datasets to exclude cells in transfected treatments without Myc signal
+
+```{r}
+
+#whole cell dataset
+wTidy<-whole[whole$include== "Y",]
+
+#individual nonGolgi metric dataset
+pTidy<-pDat[pDat$pinclude == "Y",]
+
+#individual Golgi metric dataset
+gTidy<-gDat[gDat$ginclude == "Y",]
+```
+
 
 #Data calculation operations
 
 Get Sum of cell counts per type
 ```{r}
-temp$CellSum<-NA
-ntemp<-nrow(temp)
+wTidy$CellSum<-NA
+ntemp<-nrow(wTidy)
 
-for (t in c("WT", "Control", "tepsin", "AP4E1")) {
-  for (bs in c("Basal", "Starved")) {
+for (t in c("WT", "Control", "tepsin")) {
+  for (tr in c("unt", "WTtep", "LIRless", "Cterm")) {
     for (r in c("1", "2","3", "4")) {
-      
-       temp$CellSum[which(temp$Type==t & temp$BvsS==bs & temp$Rep==r)]<-sum(temp$SegCellCount[which(temp$Type==t & temp$BvsS==bs & temp$Rep==r)],na.rm = TRUE)
-   
+       wTidy$CellSum[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)]<-sum(wTidy$SegCellCount[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)],na.rm = TRUE)
+      }
     }
-  }
   }
 ```
 
 
 Calculate the ratio of Golgi localized ATG9A relative to whole cell measurement
 ```{r}
-temp$PercGolATG9<-NA
-ntemp<-nrow(temp)
+wTidy$PercGolATG9<-NA
+ntemp<-nrow(wTidy)
 
 for (i in 1:ntemp) {
-  temp[i,28]<-(temp[i,5]/temp[i,6])*100
+  wTidy[i,18]<-(temp[i,7]/temp[i,8])*100
 }
 ```
 
+
+#If cell average values are desired
+*THIS NEEDS TO BE ADJUSTED FOR RESCUE DATAFRAME*
 
 Getting average values per cell for non-Golgi ATG9 object volume and non-Golgi object max intensity
 
 ```{r}
 
 ntemp<-nrow(temp)
-temp[,17]<-as.numeric(temp[,17])
+temp[,14]<-as.numeric(temp[,14])
 temp$AveATG9VolPerCell <- NA
 temp$AveATG9MaxIntPerCell <- NA
 
@@ -193,12 +307,12 @@ rs<-c()
 cid<-1
 fname<-temp[1,1]
 for (i in 1:ntemp) {
-  if (!is.na(temp[i,17])){
-    if (temp[i,17]!=cid | temp[i,1]!=fname) {
+  if (!is.na(temp[i,14])){
+    if (temp[i,14]!=cid | temp[i,1]!=fname) {
       temp$AveATG9VolPerCell[rs]<-mean(temp$nonGolATG9Vol[rs])
       temp$AveATG9MaxIntPerCell[rs]<-mean(temp$nonGolATG9MaxInt[rs])
       rs<-c(i)
-      cid<-temp[i,17]
+      cid<-temp[i,14]
       fname<-temp[i,1]
     }
     else {
@@ -216,18 +330,18 @@ Getting average values per cell for Golgi ATG9 object max intensity
 ```{r}
 
 ntemp<-nrow(temp)
-temp[,21]<-as.numeric(temp[,21])
+temp[,18]<-as.numeric(temp[,18])
 temp$AveATG9gMaxIntPerCell <- NA
 
 rs<-c()
 cid<-1
 fname<-temp[1,1]
 for (i in 1:ntemp) {
-  if (!is.na(temp[i,21])){
-    if (temp[i,21]!=cid | temp[i,1]!=fname) {
+  if (!is.na(temp[i,18])){
+    if (temp[i,18]!=cid | temp[i,1]!=fname) {
       temp$AveATG9gMaxIntPerCell[rs]<-mean(temp$GolATG9MaxInt[rs])
       rs<-c(i)
-      cid<-temp[i,21]
+      cid<-temp[i,18]
       fname<-temp[i,1]
     }
     else {
@@ -240,10 +354,13 @@ for (i in 1:ntemp) {
 }
 ```
 
+
+
+
 Removing unnecessary columns and duplicate rows to have values per cell
 *non-Golgi ATG9 metrics; also renames CellID column to prepare for merging*
 ```{r}
-nonGolginoDup<-temp[!duplicated(temp[,c(1,17,30)]),c(1,17,25,26,27,29,30,31)]
+nonGolginoDup<-temp[!duplicated(temp[,c(1,14,28)]),c(1,14,25,26,27,29,30,31)]
 nonGolginoDup<-nonGolginoDup[which(!is.na(nonGolginoDup[,2])),]
 names(nonGolginoDup)[names(nonGolginoDup)=="pCell"]<-"sCellID"
 ```

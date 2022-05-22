@@ -146,7 +146,7 @@ temp$PercGolATG9<-NA
 ntemp<-nrow(temp)
 
 for (i in 1:ntemp) {
-  temp[i,28]<-(temp[i,5]/temp[i,6])*100
+  temp[i,29]<-(temp[i,5]/temp[i,6])*100
 }
 ```
 
