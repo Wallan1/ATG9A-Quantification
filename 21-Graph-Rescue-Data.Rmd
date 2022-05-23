@@ -138,6 +138,4 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 #dev.off()
 
 ```
-=======
 
->>>>>>> d16a5a6241798a288003431640ae130c478edea6
