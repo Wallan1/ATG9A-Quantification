@@ -149,6 +149,7 @@ badcell2<-data.frame(temp[rs,])
 ```
 
 
+<<<<<<< HEAD
 #Find max mean Myc value of untransfected cells
 Adjust transfected threshold value based on this max
 ```{r}
@@ -286,7 +287,10 @@ wTidy$PercGolATG9<-NA
 ntemp<-nrow(wTidy)
 
 for (i in 1:ntemp) {
+
   wTidy[i,18]<-(wTidy[i,7]/wTidy[i,8])*100
+
+  wTidy[i,18]<-(temp[i,7]/temp[i,8])*100
 }
 ```
 
