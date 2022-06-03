@@ -30,7 +30,7 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4039A_2Jun22.csv",header=TRUE)
+temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4039A_3Jun22.csv",header=TRUE)
 temp$BvsS<-"Basal"
 temp$Rep<-1
 nobs=nrow(temp)

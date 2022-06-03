@@ -43,7 +43,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-     #scale_y_continuous(name=labelme,limits = c(0,8.0))+
+     scale_y_continuous(name=labelme,limits = c(0,15))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE,end=.85) +
         scale_color_viridis(discrete=TRUE,end=.85)+
@@ -51,15 +51,15 @@ plotme<-function(dat,yaxis,labelme,mytitle){
   
 }
 
-#tiff(file="./graphs/percGolATG9A_NSW4019_3Mar22.tiff",width=2000,height=3000,res=600)
-plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
+#tiff(file="./rescue-analysis_22May22/graphs/percGolATG9A_NSW4039A_2Jun22.tiff",width=3000,height=8000,res=600)
+#plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #dev.off()
 
-#tiff(file="./graphs/cleaned-CTA/MOC_CTA_NSW4019-4020-4022-4026_adjY_3Mar22.tiff",width=1800,height=2500,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/MOC_NSW4039A_adjY_2Jun22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
 #dev.off()
 
-#tiff(file="./graphs/cleaned-CTA/M1_CTA_NSW4019-4020-4022-4026_adjY_3Mar22.tiff",width=1800,height=2500,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/M1_NSW4039A_adjY_2Jun22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$MandersM1, "M1: ATG9 in TGN","")
 #dev.off()
 
@@ -71,7 +71,7 @@ plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9Vol_NSW4039A_22May22.tiff",width=5000,height=10000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9Vol_NSW4039A_0-15_3Jun22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$nonGolATG9Vol, "object volume","non-Golgi ATG9A volume")
 #dev.off()
 
@@ -125,15 +125,15 @@ plotme<-function(dat,yaxis,labelme,mytitle){
         
 }
 
-#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9MaxInt_violin-box_NSW4039A_22May22.tiff",width=8000,height=10000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9MaxInt_violin-box_NSW4039A_3Jun22.tiff",width=10000,height=8000,res=600)
 #plotme(temp, temp$nonGolATG9MaxInt, "fluorescence intensity (a.u.)","non-Golgi ATG9A Max Intensity")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/GolATG9MaxInt_violin-box_NSW4039A_22May22.tiff",width=8000,height=10000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/GolATG9MaxInt_violin-box_NSW4039A_2Jun22.tiff",width=10000,height=8000,res=600)
 #plotme(temp, temp$GolATG9MaxInt, "fluorescence intensity (a.u.)","Golgi ATG9A Max Intensity")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9MaxInt_hist_NSW4020-4022_2000-4000_v2_15Feb22.tiff",width=3000,height=3000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9MaxInt_violin-box_NSW4039A_2Jun22.tiff",width=8000,height=10000,res=600)
 #plotme(temp, temp$nonGolATG9Vol, "fluorescence intensity (a.u.)","non-Golgi ATG9A volume")
 #dev.off()
 
