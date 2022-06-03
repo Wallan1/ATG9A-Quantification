@@ -54,7 +54,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 #plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #dev.off()
 
-tiff(file="./graphs/cleaned-CTA/MOC_CTA_NSW4019-4020-4022-4026_adjY_3Mar22.tiff",width=2000,height=3000,res=600)
+tiff(file="./graphs/cleaned-CTA/MOC_CTA_NSW4019-4020-4022-4026_adjY_3Mar22.tiff",width=1800,height=2500,res=600)
 plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
 dev.off()
 

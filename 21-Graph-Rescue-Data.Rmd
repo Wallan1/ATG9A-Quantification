@@ -68,7 +68,7 @@ plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #dev.off()
 
 #tiff(file="./graphs/cleaned-CTA/PCC-ATG9A_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=2000,height=3000,res=600)
-plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
+#plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
 #dev.off()
 
 #tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9Vol_NSW4039A_22May22.tiff",width=5000,height=10000,res=600)
