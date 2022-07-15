@@ -43,7 +43,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-     scale_y_continuous(name=labelme,limits = c(0,50))+
+    # scale_y_continuous(name=labelme,limits = c(0,15))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE,end=.85) +
         scale_color_viridis(discrete=TRUE,end=.85)+
@@ -71,8 +71,8 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 #plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9Vol_0-50_NSW4039-4040-4041_14Jul22.tiff",width=3000,height=5000,res=600)
-plotme(temp,temp$nonGolATG9Vol, "object volume","non-Golgi ATG9A volume")
+#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9Vol_0-15_NSW4039-4040-4041_14Jul22.tiff",width=3000,height=5000,res=600)
+#plotme(temp,temp$nonGolATG9Vol, "object volume","non-Golgi ATG9A volume")
 #dev.off()
 
 #tiff(file="./graphs/cleaned-CTA/nonGolATG9MaxInt_CTA_NSW4019-4020-4022-4026_3Mar22.tiff",width=2000,height=3000,res=600)
@@ -103,7 +103,7 @@ violin plots- Windows save file pathing
 temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin"))
 
 
-#library(ggplot2)
+library(ggplot2)
 #install.packages("remotes")
 #remotes::install_github("coolbutuseless/ggpattern")
 #library(ggpattern)
@@ -130,7 +130,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 #dev.off()
 
 #tiff(file="./rescue-analysis_22May22/graphs/GolATG9MaxInt_violin-box_NSW4039-4040-4041_14Jul22.tiff",width=10000,height=8000,res=600)
-plotme(temp, temp$GolATG9MaxInt, "fluorescence intensity (a.u.)","Golgi ATG9A Max Intensity")
+#plotme(temp, temp$GolATG9MaxInt, "fluorescence intensity (a.u.)","Golgi ATG9A Max Intensity")
 #dev.off()
 
 #tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9MaxInt_violin-box_NSW4039A_2Jun22.tiff",width=8000,height=10000,res=600)
