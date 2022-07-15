@@ -3,67 +3,76 @@ title: "30-Statistical-Analysis"
 output: html_notebook
 ---
 
+```{r}
+#Subset data by rescue type and run individually
+resCwTidy<-combwTidy[combwTidy$Rescue=="Cterm",]
+resCpTidy<-combpTidy[combpTidy$Rescue=="Cterm",]
+resCgTidy<-combgTidy[combwTidy$Rescue=="Cterm",]
+```
 
 Kruskal-Wallis Test of metrics; separate Basal vs Starved analysis
 *NONPARAMETRIC DATA**multiple replicates*
 ```{r}
 
-install.packages("tidyverse")
-install.packages("ggpubr")
-install.packages("rstatix")
-library(tidyverse)
-library(ggpubr)
-library(rstatix)
+#install.packages("tidyverse")
+#install.packages("ggpubr")
+#install.packages("rstatix")
+#library(tidyverse)
+#library(ggpubr)
+#library(rstatix)
 
-
-KW_M1<-kruskal_test(MandersM1~Type, data=temp)
+KW_M1<-kruskal_test(MandersM1~Type, data=resCwTidy)
 summary(KW_M1)
-dt_M1<-dunn_test(MandersM1~Type, data=temp, p.adjust.method = "bonferroni")
+dt_M1<-dunn_test(MandersM1~Type, data=resCwTidy, p.adjust.method = "bonferroni")
 
-KW_M2<-kruskal_test(MandersM2~Type, data=temp)
+KW_M2<-kruskal_test(MandersM2~Type, data=resCwTidy)
 summary(KW_M2)
-dt_M2<-dunn_test(MandersM2~Type, data=temp, p.adjust.method = "bonferroni")
+dt_M2<-dunn_test(MandersM2~Type, data=resCwTidy, p.adjust.method = "bonferroni")
 
-KW_MOC<-kruskal_test(MandersMOC~Type, data=temp)
+KW_MOC<-kruskal_test(MandersMOC~Type, data=resCwTidy)
 summary(KW_MOC)
-dt_MOC<-dunn_test(MandersMOC~Type, data=temp, p.adjust.method = "bonferroni")
+dt_MOC<-dunn_test(MandersMOC~Type, data=resCwTidy, p.adjust.method = "bonferroni")
 
-KW_PCC<-kruskal_test(PearsonCoeff~Type, data=temp)
+KW_PCC<-kruskal_test(PearsonCoeff~Type, data=resCwTidy)
 summary(KW_PCC)
-dt_PCC<-dunn_test(PearsonCoeff~Type, data=temp, p.adjust.method = "bonferroni")
+dt_PCC<-dunn_test(PearsonCoeff~Type, data=resCwTidy, p.adjust.method = "bonferroni")
 
-KW_nonGolVol<-kruskal_test(nonGolATG9Vol~Type, data=temp)
+KW_nonGolVol<-kruskal_test(nonGolATG9Vol~Type, data=resCpTidy)
 summary(KW_nonGolVol)
-dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=temp, p.adjust.method = "bonferroni")
+dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=resCpTidy, p.adjust.method = "bonferroni")
 
-KW_nonGolMaxInt<-kruskal_test(nonGolATG9MaxInt~Type, data=temp)
+KW_nonGolMaxInt<-kruskal_test(nonGolATG9MaxInt~Type, data=resCpTidy)
 summary(KW_nonGolMaxInt)
-dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=temp, p.adjust.method = "bonferroni")
+dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=resCpTidy, p.adjust.method = "bonferroni")
 
-KW_GolMaxInt<-kruskal_test(GolATG9MaxInt~Type, data=temp)
+KW_GolMaxInt<-kruskal_test(GolATG9MaxInt~Type, data=resCgTidy)
 summary(KW_GolMaxInt)
-dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=temp, p.adjust.method = "bonferroni")
+dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=resCgTidy, p.adjust.method = "bonferroni")
 
-KW_nonGolMaxIntCell<-kruskal_test(AveATG9MaxIntPerCell~Type, data=tidy)
-summary(KW_nonGolMaxIntCell)
-dt_nonGolMaxIntCell<-dunn_test(AveATG9MaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+#KW_nonGolMaxIntCell<-kruskal_test(AveATG9MaxIntPerCell~Type, data=tidy)
+#summary(KW_nonGolMaxIntCell)
+#dt_nonGolMaxIntCell<-dunn_test(AveATG9MaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
 
-KW_nonGolVolCell<-kruskal_test(AveATG9VolPerCell~Type, data=tidy)
-summary(KW_nonGolVolCell)
-dt_nonGolVolCell<-dunn_test(AveATG9VolPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+#KW_nonGolVolCell<-kruskal_test(AveATG9VolPerCell~Type, data=tidy)
+#summary(KW_nonGolVolCell)
+#dt_nonGolVolCell<-dunn_test(AveATG9VolPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
 
-KW_GolMaxIntCell<-kruskal_test(AveATG9gMaxIntPerCell~Type, data=tidy)
-summary(KW_GolMaxIntCell)
-dt_GolMaxIntCell<-dunn_test(AveATG9gMaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+#KW_GolMaxIntCell<-kruskal_test(AveATG9gMaxIntPerCell~Type, data=tidy)
+#summary(KW_GolMaxIntCell)
+#dt_GolMaxIntCell<-dunn_test(AveATG9gMaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+
+
+
 ```
 
 
 R-bind and export results from Kruskal-Wallis and Dunn test
 ```{r}
-Dunn_ATG9<-rbind(dt_M1,dt_M2,dt_MOC,dt_PCC,dt_nonGolVol,dt_nonGolMaxInt,dt_GolMaxInt,dt_nonGolMaxIntCell,dt_nonGolVolCell,dt_GolMaxIntCell)
+Dunn_ATG9rescue<-rbind(dt_M1,dt_M2,dt_MOC,dt_PCC,dt_nonGolVol,dt_nonGolMaxInt,dt_GolMaxInt#,dt_nonGolMaxIntCell,dt_nonGolVolCell,dt_GolMaxIntCell
+                 )
 
 
 
-write.csv(Dunn_ATG9, file= "./stats/Dunn_ATG9_4019-4020-4022-4026_3Mar22.csv")
+write.csv(Dunn_ATG9rescue, file= "./stats/Dunn_ATG9-rescue-cterm_4039-4040-4041_14Jul22.csv")
 
 ```
