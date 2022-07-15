@@ -30,9 +30,9 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4039A_3Jun22.csv",header=TRUE)
+temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4040_14Jul22.csv",header=TRUE)
 temp$BvsS<-"Basal"
-temp$Rep<-1
+temp$Rep<-2
 nobs=nrow(temp)
 for (i in 1:nobs) {
   if (temp[i,1]=="") {
@@ -56,10 +56,10 @@ ntemp<-nrow(temp)
 
 
 for (c in 1:ntemp) {
-  if (substr(temp[c,1],33,33)=="W") {
+  if (substr(temp[c,1],34,34)=="W") {
     temp$Type[c]<-"WT"
   }
-  else if (substr(temp[c,1],33,33)=="C") {
+  else if (substr(temp[c,1],34,34)=="C") {
     temp$Type[c]<-"Control"
   }
   else {
@@ -80,13 +80,13 @@ ntemp<-nrow(temp)
 
 
 for (c in 1:ntemp) {
-  if (substr(temp[c,1],35,37)=="000") {
+  if (substr(temp[c,1],36,38)=="000") {
     temp$Rescue[c]<-"unt"
   }
-  else if (substr(temp[c,1],35,37)=="087") {
+  else if (substr(temp[c,1],36,38)=="087") {
     temp$Rescue[c]<-"WTtep"
   }
-    else if (substr(temp[c,1],35,37)=="088") {
+    else if (substr(temp[c,1],36,38)=="088") {
     temp$Rescue[c]<-"LIRless"
   }
   else {
@@ -153,7 +153,9 @@ badcell2<-data.frame(temp[rs,])
 #Find max mean Myc value of untransfected cells
 Adjust transfected threshold value based on this max
 ```{r}
-print(max(temp$meanMyc[which(temp$Rescue=="unt" && !is.na(temp$meanMyc))]))
+mycMax = (max(temp$meanMyc[which(temp$Rescue=="unt" && !is.na(temp$meanMyc))]))
+
+print(mycMax)
 ```
 
 
@@ -163,6 +165,9 @@ Subset whole cell values and add transfected designation
 Need to add a way to subset dataset to include only transfected cells from conditions other than untransfected (000)
 *add binary designation Yes/No for cells to include*
 ```{r}
+#set transfected cell Myc intensity threshold based on value obtained above
+thresh= 175
+
 #whole cell subset
 whole<-temp[which(!is.na(temp$CellID)),c(1:14,21:24)]
 
@@ -170,10 +175,10 @@ whole$include<-NA
 ntemp<-nrow(whole)
 
 for (c in 1:ntemp) {
-  if (substr(whole[c,1],37,37)=="0") {
+  if (substr(whole[c,1],38,38)=="0") {
     whole$include[c]<-"Y"
   }
-  else if (whole$meanMyc[c]>165) {
+  else if (whole$meanMyc[c]>175) {
     whole$include[c]<-"Y"
   }
     
@@ -192,7 +197,7 @@ For individual cell value metrics
 
 
 
-rs2<-temp[which(temp$meanMyc>165),c(1,4,6)]
+rs2<-temp[which(temp$meanMyc>175),c(1,4,6)]
 
 rs2$pCell<-rs2$CellID
 rs2$pCellmean<-rs2$meanMyc
@@ -213,10 +218,10 @@ included$include<-NA
 ntemp<-nrow(included)
 
 for (c in 1:ntemp) {
-  if (substr(included[c,1],35,37)=="000") {
+  if (substr(included[c,1],36,38)=="000") {
     included$pinclude[c]<-"Y"
   }
-  else if (!is.na(included$pCellmean[c]) && included$pCellmean[c]>165)
+  else if (!is.na(included$pCellmean[c]) && included$pCellmean[c]>175)
  {
     included$pinclude[c]<-"Y"
   }
@@ -224,10 +229,10 @@ for (c in 1:ntemp) {
   else {
     included$pinclude[c]<-"N"
   }
-    if (substr(included[c,1],35,37)=="000") {
+    if (substr(included[c,1],36,38)=="000") {
     included$ginclude[c]<-"Y"
   }
-  else if (!is.na(included$gCellmean[c]) && included$gCellmean[c]>165)
+  else if (!is.na(included$gCellmean[c]) && included$gCellmean[c]>175)
  {
     included$ginclude[c]<-"Y"
   }
@@ -269,6 +274,7 @@ gTidy<-gDat[gDat$ginclude == "Y",]
 #Data calculation operations
 
 Get Sum of cell counts per type
+*FIX TO COUNT INCLUDED CELLS NOT TOTAL IN IMAGE*
 ```{r}
 wTidy$CellSum<-NA
 ntemp<-nrow(wTidy)
@@ -276,7 +282,7 @@ ntemp<-nrow(wTidy)
 for (t in c("WT", "Control", "tepsin")) {
   for (tr in c("unt", "WTtep", "LIRless", "Cterm")) {
     for (r in c("1", "2","3", "4")) {
-       wTidy$CellSum[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)]<-sum(wTidy$SegCellCount[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)],na.rm = TRUE)
+       wTidy$CellSum[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)]<-sum(wTidy$include[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)],na.rm = TRUE)
       }
     }
   }
@@ -290,7 +296,7 @@ ntemp<-nrow(wTidy)
 
 for (i in 1:ntemp) {
 
-  wTidy[i,21]<-(wTidy[i,7]/wTidy[i,8])*100
+  wTidy[i,20]<-(wTidy[i,7]/wTidy[i,8])*100
 
 }
 ```
