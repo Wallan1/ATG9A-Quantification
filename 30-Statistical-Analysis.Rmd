@@ -2,7 +2,24 @@
 title: "30-Statistical-Analysis"
 output: html_notebook
 ---
+*For data subsetting*
+```{r}
+#Subset data by replicate
+#rename dataframes as needed and adjust rbinds
+rep12wTidy<-rbind(rep1wTidy,rep2wTidy)
+rep12pTidy<-rbind(rep1pTidy,rep2pTidy)
+res12gTidy<-rbind(rep1gTidy,rep2gTidy)
+```
 
+#use to run within Type comparisons, otherwise load comb dataframes of desired replicates for subsetting rescue type
+```{r}
+#Subset data by Type for within type comparisons moving forward
+combwTidy<-rep12wTidy[rep12wTidy$Type=="WT",]
+combpTidy<-rep12pTidy[rep12pTidy$Type=="WT",]
+combgTidy<-rep12gTidy[rep12gTidy$Type=="WT",]
+```
+
+#check that combined dataframes have desired datasets
 ```{r}
 #Subset data by rescue type and run individually
 resCwTidy<-combwTidy[combwTidy$Rescue=="Cterm",]
