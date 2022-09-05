@@ -28,7 +28,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
    ggplot(dat,aes(x=Type,y=yaxis,fill=Type, pattern=Rescue)) + 
       #geom_boxplot(width=.7,position = position_dodge(0.9),alpha=0.5, outlier.shape = 20, outlier.size = -1) +
     #geom_jitter(position = position_jitterdodge(1.4),alpha=.6, color = "grey") +
-    facet_wrap(~BvsS)+
+    facet_wrap(~Rescue)+
     geom_jitter(position = position_jitterdodge(1.4),alpha=0.8, color= "dark grey") +
     stat_boxplot(geom = "errorbar", width = 0.4) +
     geom_boxplot_pattern(
@@ -43,7 +43,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-    # scale_y_continuous(name=labelme,limits = c(0,15))+
+     #scale_y_continuous(name=labelme,limits = c(0,10))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE,end=.85) +
         scale_color_viridis(discrete=TRUE,end=.85)+
@@ -55,15 +55,15 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 #plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/MOC_NSW4039-4040-4041_14Jul22.tiff",width=3000,height=5000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/MOC_NSW4046_130-myc_yadj_5Sep22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/M1_NSW4039-4040-4041_14Jul22.tiff",width=3000,height=5000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/M1_NSW4046_130-myc_yadj_5Sep22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$MandersM1, "M1: ATG9 in TGN","")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/M2_NSW4039-4040-4041_14Jul22.tiff",width=3000,height=5000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/M2_NSW4039-4040_16Jul22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$MandersM2, "M2: TGN in ATG9","")
 #dev.off()
 
@@ -71,7 +71,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 #plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9Vol_0-15_NSW4039-4040-4041_14Jul22.tiff",width=3000,height=5000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9Vol_0-10_NSW4046_5Sep22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$nonGolATG9Vol, "object volume","non-Golgi ATG9A volume")
 #dev.off()
 
@@ -125,11 +125,11 @@ plotme<-function(dat,yaxis,labelme,mytitle){
         
 }
 
-#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9MaxInt_violin-box_NSW4039-4040-4041_14Jul22.tiff",width=10000,height=8000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/nonGolATG9MaxInt_violin-box_NSW4046_5Sep22.tiff",width=10000,height=8000,res=600)
 #plotme(temp, temp$nonGolATG9MaxInt, "fluorescence intensity (a.u.)","non-Golgi ATG9A Max Intensity")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/GolATG9MaxInt_violin-box_NSW4039-4040-4041_14Jul22.tiff",width=10000,height=8000,res=600)
+#tiff(file="./rescue-analysis_22May22/graphs/GolATG9MaxInt_violin-box_NSW4046_5Sep22.tiff",width=10000,height=8000,res=600)
 #plotme(temp, temp$GolATG9MaxInt, "fluorescence intensity (a.u.)","Golgi ATG9A Max Intensity")
 #dev.off()
 

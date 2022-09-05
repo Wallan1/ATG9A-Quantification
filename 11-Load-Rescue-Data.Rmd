@@ -30,9 +30,9 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4040_15Jun22.csv",header=TRUE)
+temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4046_31Aug22.csv",header=TRUE)
 temp$BvsS<-"Basal"
-temp$Rep<-2
+temp$Rep<-1
 nobs=nrow(temp)
 for (i in 1:nobs) {
   if (temp[i,1]=="") {
@@ -56,10 +56,10 @@ ntemp<-nrow(temp)
 
 
 for (c in 1:ntemp) {
-  if (substr(temp[c,1],1,1)=="W") {
+  if (substr(temp[c,1], 34,34)=="W") {
     temp$Type[c]<-"WT"
   }
-  else if (substr(temp[c,1],1,1)=="C") {
+  else if (substr(temp[c,1],34,34)=="C") {
     temp$Type[c]<-"Control"
   }
   else {
@@ -80,13 +80,13 @@ ntemp<-nrow(temp)
 
 
 for (c in 1:ntemp) {
-  if (substr(temp[c,1],3,5)=="000") {
+  if (substr(temp[c,1],36,38)=="000") {
     temp$Rescue[c]<-"unt"
   }
-  else if (substr(temp[c,1],3,5)=="087") {
+  else if (substr(temp[c,1],36,38)=="087") {
     temp$Rescue[c]<-"WTtep"
   }
-    else if (substr(temp[c,1],3,5)=="088") {
+    else if (substr(temp[c,1],36,38)=="088") {
     temp$Rescue[c]<-"LIRless"
   }
   else {
@@ -166,7 +166,7 @@ Need to add a way to subset dataset to include only transfected cells from condi
 *add binary designation Yes/No for cells to include*
 ```{r}
 #set transfected cell Myc intensity threshold based on value obtained above
-thresh= 175
+thresh= 600
 
 #whole cell subset
 whole<-temp[which(!is.na(temp$CellID)),c(1:14,21:24)]
@@ -175,10 +175,10 @@ whole$include<-NA
 ntemp<-nrow(whole)
 
 for (c in 1:ntemp) {
-  if (substr(whole[c,1],5,5)=="0") {
+  if (substr(whole[c,1],38,38)=="0") {
     whole$include[c]<-"Y"
   }
-  else if (whole$meanMyc[c]>175) {
+  else if (whole$meanMyc[c]>130) {
     whole$include[c]<-"Y"
   }
     
@@ -197,7 +197,7 @@ For individual cell value metrics
 
 
 
-rs2<-temp[which(temp$meanMyc>175),c(1,4,6)]
+rs2<-temp[which(temp$meanMyc>130),c(1,4,6)]
 
 rs2$pCell<-rs2$CellID
 rs2$pCellmean<-rs2$meanMyc
@@ -218,10 +218,10 @@ included$include<-NA
 ntemp<-nrow(included)
 
 for (c in 1:ntemp) {
-  if (substr(included[c,1],3,5)=="000") {
+  if (substr(included[c,1],36,38)=="000") {
     included$pinclude[c]<-"Y"
   }
-  else if (!is.na(included$pCellmean[c]) && included$pCellmean[c]>175)
+  else if (!is.na(included$pCellmean[c]) && included$pCellmean[c]>130)
  {
     included$pinclude[c]<-"Y"
   }
@@ -229,10 +229,10 @@ for (c in 1:ntemp) {
   else {
     included$pinclude[c]<-"N"
   }
-    if (substr(included[c,1],3,5)=="000") {
+    if (substr(included[c,1],36,38)=="000") {
     included$ginclude[c]<-"Y"
   }
-  else if (!is.na(included$gCellmean[c]) && included$gCellmean[c]>175)
+  else if (!is.na(included$gCellmean[c]) && included$gCellmean[c]>130)
  {
     included$ginclude[c]<-"Y"
   }
