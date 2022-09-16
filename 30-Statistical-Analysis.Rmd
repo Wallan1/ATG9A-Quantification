@@ -8,7 +8,7 @@ output: html_notebook
 #rename dataframes as needed and adjust rbinds
 rep12wTidy<-rbind(rep1wTidy,rep2wTidy)
 rep12pTidy<-rbind(rep1pTidy,rep2pTidy)
-res12gTidy<-rbind(rep1gTidy,rep2gTidy)
+rep12gTidy<-rbind(rep1gTidy,rep2gTidy)
 ```
 
 #use to run within Type comparisons, otherwise load comb dataframes of desired replicates for subsetting rescue type
@@ -90,6 +90,6 @@ Dunn_ATG9rescue<-rbind(dt_M1,dt_M2,dt_MOC,dt_PCC,dt_nonGolVol,dt_nonGolMaxInt,dt
 
 
 
-write.csv(Dunn_ATG9rescue, file= "./stats/Dunn_ATG9-rescue-Cterm_4039-4040-4041_14Jul22.csv")
+write.csv(Dunn_ATG9rescue, file= "./stats/ATG9A-rescues/Dunn_ATG9-rescue-Cterm_4046-4048-4049_15Sep22.csv")
 
 ```

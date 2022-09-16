@@ -30,9 +30,9 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4048_12Sep22.csv",header=TRUE)
+temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4049_15Sep22.csv",header=TRUE)
 temp$BvsS<-"Basal"
-temp$Rep<-2
+temp$Rep<-3
 nobs=nrow(temp)
 for (i in 1:nobs) {
   if (temp[i,1]=="") {
