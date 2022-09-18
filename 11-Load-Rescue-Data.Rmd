@@ -273,16 +273,16 @@ gTidy<-gDat[gDat$ginclude == "Y",]
 
 #Data calculation operations
 
-Get Sum of cell counts per type
-*FIX TO COUNT INCLUDED CELLS NOT TOTAL IN IMAGE*
+Get Sum of cell counts included per type
+*INCLUDED CELLS NOT TOTAL IN IMAGE*
 ```{r}
-wTidy$CellSum<-NA
+wTidy$IncCellSum<-NA
 ntemp<-nrow(wTidy)
 
 for (t in c("WT", "Control", "tepsin")) {
   for (tr in c("unt", "WTtep", "LIRless", "Cterm")) {
     for (r in c("1", "2","3", "4")) {
-       wTidy$CellSum[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)]<-sum(wTidy$include[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)],na.rm = TRUE)
+       wTidy$IncCellSum[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)]<-sum(wTidy$include[which(wTidy$Type==t & wTidy$Rescue==tr & wTidy$Rep==r)]=="Y",na.rm = TRUE)
       }
     }
   }
