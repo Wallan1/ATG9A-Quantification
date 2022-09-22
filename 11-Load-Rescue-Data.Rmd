@@ -30,7 +30,7 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4049_15Sep22.csv",header=TRUE)
+temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4049_21Sep22.csv",header=TRUE)
 temp$BvsS<-"Basal"
 temp$Rep<-3
 nobs=nrow(temp)
@@ -272,6 +272,19 @@ gTidy<-gDat[gDat$ginclude == "Y",]
 
 
 #Data calculation operations
+Calculate the ratio of Golgi localized ATG9A relative to whole cell measurement
+```{r}
+wTidy$PercGolATG9<-NA
+ntemp<-nrow(wTidy)
+
+for (i in 1:ntemp) {
+
+  wTidy[i,20]<-(wTidy[i,7]/wTidy[i,8])*100
+
+}
+```
+
+
 
 Get Sum of cell counts included per type
 *INCLUDED CELLS NOT TOTAL IN IMAGE*
@@ -289,17 +302,6 @@ for (t in c("WT", "Control", "tepsin")) {
 ```
 
 
-Calculate the ratio of Golgi localized ATG9A relative to whole cell measurement
-```{r}
-wTidy$PercGolATG9<-NA
-ntemp<-nrow(wTidy)
-
-for (i in 1:ntemp) {
-
-  wTidy[i,20]<-(wTidy[i,7]/wTidy[i,8])*100
-
-}
-```
 
 
 #If cell average values are desired
