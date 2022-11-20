@@ -8,7 +8,7 @@ output: html_notebook
 ```{r}
 subsetCT<-tidy[tidy$Type == "Control" | tidy$Type == "tepsin",]
 
-
+subsetUC<-subsetCT[subsetCT$Rescue == "unt" | subsetCT$Rescue == "Cterm",]
 
 ```
 
@@ -30,11 +30,11 @@ plotme<-function(dat,yaxis,labelme,mytitle){
    ggplot(dat,aes(x=Type,y=yaxis,fill=Type, pattern=Rescue)) + 
       #geom_boxplot(width=.7,position = position_dodge(0.9),alpha=0.5, outlier.shape = 20, outlier.size = -1) +
     #geom_jitter(position = position_jitterdodge(1.4),alpha=.6, color = "grey") +
-    facet_wrap(~Rescue)+
-    geom_jitter(position = position_jitterdodge(1.4),alpha=0.8, color= "dark grey") +
+    #facet_wrap(~Rescue)+
+    geom_jitter(position = position_jitterdodge(1.4), alpha=0.8, color= "dark grey") +
     stat_boxplot(geom = "errorbar", width = 0.4) +
     geom_boxplot_pattern(
-    aes(),width=0.7,position = position_dodge(0.9),outlier.shape=NA, alpha=0.5,
+    aes(),width=0.7,position = position_dodge(095),outlier.shape=NA, alpha=0.5,
             pattern_spacing = 0.1,
             pattern_fill = "black",
             pattern_angle = 25,
@@ -45,7 +45,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-    scale_y_continuous(name=labelme,limits = c(0,20))+
+  #scale_y_continuous(name=labelme,limits = c(0.26, 0.84))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE, end=.85) +
         scale_color_viridis(discrete=TRUE,end=.85)+
@@ -57,9 +57,9 @@ plotme<-function(dat,yaxis,labelme,mytitle){
 #plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
 #dev.off()
 
-#tiff(file="./rescue-analysis_22May22/graphs/MOC_NSW4046-4048-4049_adjY-CT_noFW_21Sep22.tiff",width=3000,height=5000,res=600)
-#plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
-#dev.off()
+tiff(file="./rescue-analysis_22May22/graphs/MOC_NSW4046-4048-4049_adjY-CT-UC_20Nov22.tiff",width=2500,height=2500,res=600)
+plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
+dev.off()
 
 #tiff(file="./rescue-analysis_22May22/graphs/M1_NSW4046-4048-4049_adjY-CT_noFW_21Sep22.tiff",width=3000,height=5000,res=600)
 #plotme(temp,temp$MandersM1, "M1: ATG9 in TGN","")
