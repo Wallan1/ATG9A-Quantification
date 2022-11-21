@@ -22,9 +22,9 @@ combgTidy<-rep12gTidy[rep12gTidy$Type=="WT",]
 #check that combined dataframes have desired datasets
 ```{r}
 #Subset data by rescue type and run individually
-resCwTidy<-combwTidy[combwTidy$Rescue=="Cterm",]
-resCpTidy<-combpTidy[combpTidy$Rescue=="Cterm",]
-resCgTidy<-combgTidy[combwTidy$Rescue=="Cterm",]
+resCwTidy<-combwTidy[combwTidy$Rescue=="unt",]
+resCpTidy<-combpTidy[combpTidy$Rescue=="unt",]
+resCgTidy<-combgTidy[combwTidy$Rescue=="unt",]
 ```
 
 Kruskal-Wallis Test of metrics; separate Basal vs Starved analysis
@@ -90,6 +90,36 @@ Dunn_ATG9rescue<-rbind(dt_M1,dt_M2,dt_MOC,dt_PCC,dt_nonGolVol,dt_nonGolMaxInt,dt
 
 
 
-write.csv(Dunn_ATG9rescue, file= "./stats/ATG9A-rescues/Dunn_ATG9-rescue-Cterm_4046-4048-4049_21Sep22.csv")
+write.csv(Dunn_ATG9rescue, file= "./stats/ATG9A-rescues/Dunn_ATG9-rescue-unt_4046-4048-4049_20Nov22.csv")
 
 ```
+
+
+
+U-Test of MOC
+*for nonparametric distributions*
+
+
+*Optional to subset data*
+```{r}
+subsetC<-tidy[tidy$Type == "Control",]
+subsetT<-tidy[tidy$Type == "tepsin",]
+
+
+subsetconUC<-subsetC[subsetC$Rescue == "unt" | subsetC$Rescue == "Cterm",]
+subsettepUC<-subsetT[subsetT$Rescue == "unt" | subsetT$Rescue == "Cterm",]
+
+
+```
+
+```{r}
+
+ConMandersUtest<-wilcox_test(data=subsetC, MandersMOC ~ Rescue, paired= FALSE)
+
+TepMandersUtest<-wilcox_test(data=subsetT, MandersMOC ~ Rescue, paired= FALSE)
+
+MandersUtest<-rbind(ConMandersUtest,TepMandersUtest)
+write.csv(MandersUtest, file= "./stats/ATG9A-rescues/Utest_ATG9-rescue_4046-4048-4049_20Nov22.csv")
+
+```
+
