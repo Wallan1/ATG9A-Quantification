@@ -95,6 +95,17 @@ write.csv(Dunn_ATG9rescue, file= "./stats/ATG9A-rescues/Dunn_ATG9-rescue-unt_404
 ```
 
 
+Analysis of Percent Golgi ATG9A signal
+*make sure temp dataset is subset and cleaned data*
+```{r}
+KW_PGATG9<-kruskal_test(PercGolATG9~Type, data=temp)
+summary(KW_PGATG9)
+dt_PGATG9<-dunn_test(PercGolATG9~Type, data=temp, p.adjust.method = "bonferroni")
+
+write.csv(dt_PGATG9, file= "./stats/PercGolATG9_May2023/Dunn_PercGolATG9_4019-4020-4022-4026_15May23.csv")
+```
+
+
 
 U-Test of MOC
 *for nonparametric distributions*
