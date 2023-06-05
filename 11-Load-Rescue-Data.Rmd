@@ -30,7 +30,7 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4049_26Oct22.csv",header=TRUE)
+temp=read.csv(file="./rescue-analysis_22May22/datasets/NSW4049_21Sep22.csv",header=TRUE)
 temp$BvsS<-"Basal"
 temp$Rep<-3
 nobs=nrow(temp)
@@ -153,7 +153,7 @@ badcell2<-data.frame(temp[rs,])
 #Find max mean Myc value of untransfected cells
 Adjust transfected threshold value based on this max
 ```{r}
-mycMax = (max(temp$meanMyc[which(temp$Rescue=="unt" && !is.na(temp$meanMyc))]))
+mycMax = (max(temp$meanMyc[which(temp$Rescue=="unt" & !is.na(temp$meanMyc))]))
 
 print(mycMax)
 ```
