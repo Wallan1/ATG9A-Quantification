@@ -130,10 +130,12 @@ subsettepUC<-subsetT[subsetT$Rescue == "unt" | subsetT$Rescue == "Cterm",]
 ```{r}
 
 ConMandersUtest<-wilcox_test(data=subsetC, MandersMOC ~ Rescue, paired= FALSE)
+ConPCCUtest<-wilcox_test(data=subsetC, PearsonCoeff ~ Rescue, paired= FALSE)
 
 TepMandersUtest<-wilcox_test(data=subsetT, MandersMOC ~ Rescue, paired= FALSE)
+TepPCCUtest<-wilcox_test(data=subsetT, PearsonCoeff ~ Rescue, paired= FALSE)
 
-MandersUtest<-rbind(ConMandersUtest,TepMandersUtest)
+MandersUtest<-rbind(ConMandersUtest,TepMandersUtest,ConPCCUtest,TepPCCUtest)
 write.csv(MandersUtest, file= "./stats/ATG9A-rescues/May-2023/Utest_ATG9-rescue_4046-4048-4049_5Jun23.csv")
 
 ```
