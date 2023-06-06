@@ -117,11 +117,11 @@ plotme<-function(dat,yaxis,labelme,mytitle){
    ggplot(dat,aes(x=Type,y=yaxis,fill=Type, pattern=Rescue)) + 
       #geom_boxplot(width=.7,position = position_dodge(0.9),alpha=0.5, outlier.shape = 20, outlier.size = -1) +
     #geom_jitter(position = position_jitterdodge(1.4),alpha=.6, color = "grey") +
-    geom_jitter(position = position_jitterdodge(jitter.width=0.6, dodge.width=0.8),  alpha=0.8, color= "dark grey") +
-   stat_boxplot(geom = "errorbar", width = 0.4, position = position_dodge(width = 0.8)) +
+    geom_jitter(position = position_jitterdodge(jitter.width=0.35, dodge.width=0.9),  alpha=0.8, color= "dark grey") +
+   stat_boxplot(geom = "errorbar", width = 0.5, position = position_dodge(width = 0.9)) +
     geom_boxplot_pattern(
-    aes(),width=0.65,position = position_dodge(0.8), stat= "boxplot", outlier.shape=NA, alpha=0.5,
-            pattern_spacing = 0.05,
+    aes(),width=0.7,position = position_dodge(0.9), stat= "boxplot", outlier.shape=NA, alpha=0.5,
+            pattern_spacing = 0.03,
             pattern_fill = "black",
             pattern_angle = 25,
             pattern_density = 0.1,) + 
@@ -131,7 +131,7 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-  scale_y_continuous(name=labelme,limits = c(0.24, 0.84))+
+  scale_y_continuous(name=labelme,limits = c(0, 100))+
      theme(plot.title=element_text(hjust=.5))+
         scale_fill_viridis(discrete=TRUE, end=.45) +
         scale_color_viridis(discrete=TRUE,end=.45)+
@@ -139,12 +139,16 @@ plotme<-function(dat,yaxis,labelme,mytitle){
   
 }
 
+tiff(file="./rescue-analysis_22May22/graphs/May-2023/corrected-datasets_June2023/percGolATG9A_NSW4046-4048-4049_CT_noFacet_adjY0-100_5Jun23.tiff",width=4000,height=4000,res=600)
+plotme(temp,temp$PercGolATG9, "percent ATG9A in TGN","")
+dev.off()
+
 #tiff(file="./rescue-analysis_22May22/graphs/May-2023/MOC_noFacet_NSW4046-4048-4049_adjY-CT_5Jun23.tiff",width=2500,height=2500,res=600)
-plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
+#plotme(temp,temp$MandersMOC, "Manders Overlap Coefficient","")
 #dev.off()
 
 #tiff(file="./rescue-analysis_22May22/graphs/May-2023/PCC-ATG9A_noFacet_NSW4046-4048-4049_adjY-CT_5Jun23.tiff",width=2500,height=2500,res=600)
-plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
+#plotme(temp,temp$PearsonCoeff, "Pearson's correlation coefficient","ATG9A co-localization with TGN")
 #dev.off()
 
 
