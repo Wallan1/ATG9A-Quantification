@@ -22,9 +22,9 @@ combgTidy<-rep12gTidy[rep12gTidy$Type=="WT",]
 #check that combined dataframes have desired datasets
 ```{r}
 #Subset data by rescue type and run individually
-resCwTidy<-combwTidy[combwTidy$Rescue=="unt",]
-resCpTidy<-combpTidy[combpTidy$Rescue=="unt",]
-resCgTidy<-combgTidy[combwTidy$Rescue=="unt",]
+resCwTidy<-combwTidy[combwTidy$Rescue=="Cterm",]
+#resCpTidy<-combpTidy[combpTidy$Rescue=="unt",]
+#resCgTidy<-combgTidy[combwTidy$Rescue=="unt",]
 ```
 
 Kruskal-Wallis Test of metrics; separate Basal vs Starved analysis
@@ -37,6 +37,10 @@ Kruskal-Wallis Test of metrics; separate Basal vs Starved analysis
 #library(tidyverse)
 #library(ggpubr)
 #library(rstatix)
+
+KW_PGATG9<-kruskal_test(PercGolATG9~Type, data=resCwTidy)
+summary(KW_PGATG9)
+dt_PGATG9<-dunn_test(PercGolATG9~Type, data=resCwTidy, p.adjust.method = "bonferroni")
 
 KW_M1<-kruskal_test(MandersM1~Type, data=resCwTidy)
 summary(KW_M1)
@@ -54,17 +58,17 @@ KW_PCC<-kruskal_test(PearsonCoeff~Type, data=resCwTidy)
 summary(KW_PCC)
 dt_PCC<-dunn_test(PearsonCoeff~Type, data=resCwTidy, p.adjust.method = "bonferroni")
 
-KW_nonGolVol<-kruskal_test(nonGolATG9Vol~Type, data=resCpTidy)
-summary(KW_nonGolVol)
-dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=resCpTidy, p.adjust.method = "bonferroni")
+#KW_nonGolVol<-kruskal_test(nonGolATG9Vol~Type, data=resCpTidy)
+#summary(KW_nonGolVol)
+#dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=resCpTidy, p.adjust.method = "bonferroni")
 
-KW_nonGolMaxInt<-kruskal_test(nonGolATG9MaxInt~Type, data=resCpTidy)
-summary(KW_nonGolMaxInt)
-dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=resCpTidy, p.adjust.method = "bonferroni")
+#KW_nonGolMaxInt<-kruskal_test(nonGolATG9MaxInt~Type, data=resCpTidy)
+#summary(KW_nonGolMaxInt)
+#dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=resCpTidy, p.adjust.method = "bonferroni")
 
-KW_GolMaxInt<-kruskal_test(GolATG9MaxInt~Type, data=resCgTidy)
-summary(KW_GolMaxInt)
-dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=resCgTidy, p.adjust.method = "bonferroni")
+#KW_GolMaxInt<-kruskal_test(GolATG9MaxInt~Type, data=resCgTidy)
+#summary(KW_GolMaxInt)
+#dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=resCgTidy, p.adjust.method = "bonferroni")
 
 #KW_nonGolMaxIntCell<-kruskal_test(AveATG9MaxIntPerCell~Type, data=tidy)
 #summary(KW_nonGolMaxIntCell)
@@ -85,12 +89,12 @@ dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=resCgTidy, p.adjust.method = "b
 
 R-bind and export results from Kruskal-Wallis and Dunn test
 ```{r}
-Dunn_ATG9rescue<-rbind(dt_M1,dt_M2,dt_MOC,dt_PCC,dt_nonGolVol,dt_nonGolMaxInt,dt_GolMaxInt#,dt_nonGolMaxIntCell,dt_nonGolVolCell,dt_GolMaxIntCell
+Dunn_ATG9rescue<-rbind(dt_PGATG9, dt_M1,dt_M2,dt_MOC,dt_PCC #,dt_nonGolVol,dt_nonGolMaxInt,dt_GolMaxInt#,dt_nonGolMaxIntCell,dt_nonGolVolCell,dt_GolMaxIntCell
                  )
 
 
 
-write.csv(Dunn_ATG9rescue, file= "./stats/ATG9A-rescues/Dunn_ATG9-rescue-unt_4046-4048-4049_20Nov22.csv")
+write.csv(Dunn_ATG9rescue, file= "./stats/ATG9A-rescues/May-2023/Dunn_ATG9-rescue-Cterm_4046-4048-4049_5Jun23.csv")
 
 ```
 
@@ -130,7 +134,7 @@ ConMandersUtest<-wilcox_test(data=subsetC, MandersMOC ~ Rescue, paired= FALSE)
 TepMandersUtest<-wilcox_test(data=subsetT, MandersMOC ~ Rescue, paired= FALSE)
 
 MandersUtest<-rbind(ConMandersUtest,TepMandersUtest)
-write.csv(MandersUtest, file= "./stats/ATG9A-rescues/Utest_ATG9-rescue_4046-4048-4049_20Nov22.csv")
+write.csv(MandersUtest, file= "./stats/ATG9A-rescues/May-2023/Utest_ATG9-rescue_4046-4048-4049_5Jun23.csv")
 
 ```
 
