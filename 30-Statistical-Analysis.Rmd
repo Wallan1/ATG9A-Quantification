@@ -10,15 +10,100 @@ rep12wTidy<-rbind(rep1wTidy,rep2wTidy)
 rep12pTidy<-rbind(rep1pTidy,rep2pTidy)
 rep12gTidy<-rbind(rep1gTidy,rep2gTidy)
 ```
-
+Subset dataframes for analysis within genetic types to compare rescue conditions
 #use to run within Type comparisons, otherwise load comb dataframes of desired replicates for subsetting rescue type
 ```{r}
 #Subset data by Type for within type comparisons moving forward
-combwTidy<-rep12wTidy[rep12wTidy$Type=="WT",]
-combpTidy<-rep12pTidy[rep12pTidy$Type=="WT",]
-combgTidy<-rep12gTidy[rep12gTidy$Type=="WT",]
+#using dataframe naming scheme from subset by rescue to work with KW test
+
+TypewTidy<-combwTidy[combwTidy$Type=="tepsin",]
+
+#TypepTidy<-combpTidy[combpTidy$Type=="WT",]
+#TypegTidy<-combgTidy[combwTidy$Type=="WT",]
 ```
 
+
+Kruskal-Wallis Test of metrics within genetic type
+*NONPARAMETRIC DATA**multiple replicates*
+*pTidy and gTidy not yet adjusted for within genetic type analysis*
+```{r}
+
+#install.packages("tidyverse")
+#install.packages("ggpubr")
+#install.packages("rstatix")
+#library(tidyverse)
+#library(ggpubr)
+#library(rstatix)
+
+KW_PGATG9<-kruskal_test(PercGolATG9~Rescue, data=TypewTidy)
+summary(KW_PGATG9)
+dt_PGATG9<-dunn_test(PercGolATG9~Rescue, data=TypewTidy, p.adjust.method = "bonferroni")
+
+KW_M1<-kruskal_test(MandersM1~Rescue, data=TypewTidy)
+summary(KW_M1)
+dt_M1<-dunn_test(MandersM1~Rescue, data=TypewTidy, p.adjust.method = "bonferroni")
+
+KW_M2<-kruskal_test(MandersM2~Rescue, data=TypewTidy)
+summary(KW_M2)
+dt_M2<-dunn_test(MandersM2~Rescue, data=TypewTidy, p.adjust.method = "bonferroni")
+
+KW_MOC<-kruskal_test(MandersMOC~Rescue, data=TypewTidy)
+summary(KW_MOC)
+dt_MOC<-dunn_test(MandersMOC~Rescue, data=TypewTidy, p.adjust.method = "bonferroni")
+
+KW_PCC<-kruskal_test(PearsonCoeff~Rescue, data=TypewTidy)
+summary(KW_PCC)
+dt_PCC<-dunn_test(PearsonCoeff~Rescue, data=TypewTidy, p.adjust.method = "bonferroni")
+
+
+
+#KW_nonGolVol<-kruskal_test(nonGolATG9Vol~Type, data=resCpTidy)
+#summary(KW_nonGolVol)
+#dt_nonGolVol<-dunn_test(nonGolATG9Vol~Type, data=resCpTidy, p.adjust.method = "bonferroni")
+
+#KW_nonGolMaxInt<-kruskal_test(nonGolATG9MaxInt~Type, data=resCpTidy)
+#summary(KW_nonGolMaxInt)
+#dt_nonGolMaxInt<-dunn_test(nonGolATG9MaxInt~Type, data=resCpTidy, p.adjust.method = "bonferroni")
+
+#KW_GolMaxInt<-kruskal_test(GolATG9MaxInt~Type, data=resCgTidy)
+#summary(KW_GolMaxInt)
+#dt_GolMaxInt<-dunn_test(GolATG9MaxInt~Type, data=resCgTidy, p.adjust.method = "bonferroni")
+
+#KW_nonGolMaxIntCell<-kruskal_test(AveATG9MaxIntPerCell~Type, data=tidy)
+#summary(KW_nonGolMaxIntCell)
+#dt_nonGolMaxIntCell<-dunn_test(AveATG9MaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+
+#KW_nonGolVolCell<-kruskal_test(AveATG9VolPerCell~Type, data=tidy)
+#summary(KW_nonGolVolCell)
+#dt_nonGolVolCell<-dunn_test(AveATG9VolPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+
+#KW_GolMaxIntCell<-kruskal_test(AveATG9gMaxIntPerCell~Type, data=tidy)
+#summary(KW_GolMaxIntCell)
+#dt_GolMaxIntCell<-dunn_test(AveATG9gMaxIntPerCell~Type, data=tidy, p.adjust.method = "bonferroni")
+
+
+
+```
+
+
+R-bind and export results from Kruskal-Wallis and Dunn test per genetic type (WT, Control, tepsin KD)
+```{r}
+Dunn_ATG9rescue<-rbind(dt_PGATG9, dt_M1,dt_M2,dt_MOC,dt_PCC #,dt_nonGolVol,dt_nonGolMaxInt,dt_GolMaxInt#,dt_nonGolMaxIntCell,dt_nonGolVolCell,dt_GolMaxIntCell
+                 )
+
+
+
+write.csv(Dunn_ATG9rescue, file= "./stats/ATG9A-rescues/May-2023/Dunn_ATG9-rescue-tepsin_4046-4048-4049_6Jun23.csv")
+
+```
+
+
+
+
+
+
+
+Subset dataframes for analysis within rescue types comparing genetic types
 #check that combined dataframes have desired datasets
 ```{r}
 #Subset data by rescue type and run individually
