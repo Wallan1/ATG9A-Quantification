@@ -3,16 +3,125 @@ title: "22-Graph-ATG9-LC3-Data"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
-
+*Optional to subset data*
 ```{r}
-plot(cars)
+subsetWCT<-temp[temp$Type == "WT" | temp$Type == "Control" | temp$Type == "tepsin",]
+
+
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+boxplots- Windows save file pathing
+*filepathing is written for Windows*
+#rename graphing file to temp based on which subset of data is desired
+```{r}
+temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+#library(ggplot2)
+#install.packages("remotes")
+#remotes::install_github("coolbutuseless/ggpattern")
+#library(ggpattern)
+#library(viridis)
+
+plotme<-function(dat,yaxis,labelme,mytitle){
+   ggplot(dat,aes(x=Type,y=yaxis,fill=Type, pattern=BvsS)) + 
+      #geom_boxplot(width=.7,position = position_dodge(0.9),alpha=0.5, outlier.shape = 20, outlier.size = -1) +
+    #geom_jitter(position = position_jitterdodge(1.4),alpha=.6, color = "grey") +
+    facet_wrap(~BvsS)+
+    geom_jitter(position = position_jitterdodge(1.4),alpha=0.8, color= "dark grey") +
+    stat_boxplot(geom = "errorbar", width = 0.4) +
+    geom_boxplot_pattern(
+    aes(),width=0.7,position = position_dodge(0.9),outlier.shape=NA, alpha=0.5,
+            pattern_spacing = 0.1,
+            pattern_fill = "black",
+            pattern_angle = 25,
+            pattern_density = 0.1,) + 
+    
+        guides(pattern = guide_legend(override.aes = list(fill = "white")),
+        fill = guide_legend(override.aes = list(pattern = "none")))+
+     ylab(labelme)+
+     ggtitle(mytitle)+
+     theme_minimal()+
+    # scale_y_continuous(name=labelme,limits = c(0,100))+
+     theme(plot.title=element_text(hjust=.5))+
+        scale_fill_viridis(discrete=TRUE,end=.85) +
+        scale_color_viridis(discrete=TRUE,end=.85)+
+        scale_pattern_manual(values = c(Basal = "none", Starved = "stripe"))
+  
+}
+
+tiff(file="./ATG9-LC3/graphs/LC3perCell_comb_15Jun23.tiff",width=3000,height=2500,res=600)
+plotme(temp,temp$LC3ObCount, "LC3B puncta per cell","")
+dev.off()
+
+tiff(file="./ATG9-LC3/graphs/ATG9-LC3PCC_comb_15Jun23.tiff",width=3000,height=2500,res=600)
+plotme(temp,temp$PearsonCoeff, "PCC","ATG9A/LC3B co-localization (PCC)")
+dev.off()
+
+tiff(file="./ATG9-LC3/graphs/ATG9-LC3MOC_comb_15Jun23.tiff",width=3000,height=2500,res=600)
+plotme(temp,temp$ManderCoeff2MOC, "MOC","ATG9A/LC3B co-localization (MOC)")
+dev.off()
+
+tiff(file="./ATG9-LC3/graphs/LC3ObVol_comb_15Jun23.tiff",width=3000,height=2500,res=600)
+plotme(temp,temp$LC3Vol, "LC3B object volume","LC3B object volume")
+dev.off()
+
+tiff(file="./ATG9-LC3/graphs/LC3ObMaxInt_comb_15Jun23.tiff",width=3000,height=2500,res=600)
+plotme(temp,temp$LC3MaxObjInt, "LC3B object max intensity","LC3B object max intensity")
+dev.off()
+
+tiff(file="./ATG9-LC3/graphs/LC3ObMeanInt_comb_15Jun23.tiff",width=3000,height=2500,res=600)
+plotme(temp,temp$LC3MeanObjInt, "LC3B object mean intensity","LC3B object mean intensity")
+dev.off()
+
+tiff(file="./ATG9-LC3/graphs/LC3ObSumInt_comb_15Jun23.tiff",width=3000,height=2500,res=600)
+plotme(temp,temp$LC3SumObjInt, "LC3B sum intensity per object","LC3B object mean intensity")
+dev.off()
+
+```
+
+
+violin plots- Windows save file pathing
+*filepathing is written for Windows*
+```{r}
+temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
+
+
+#library(ggplot2)
+#install.packages("remotes")
+#remotes::install_github("coolbutuseless/ggpattern")
+#library(ggpattern)
+#library(viridis)
+
+plotme<-function(dat,yaxis,labelme,mytitle){
+  
+    ggplot(dat,aes(x=Type,y=yaxis,fill=Type)) +
+    geom_violin(scale="count", width= 1.05, color="#424949", alpha=0.5) +
+    geom_boxplot(width=0.2, color="#424949", outlier.shape=NA, alpha=0.2) +
+    #facet_wrap(~Type)+
+    #scale_y_continuous(limits =c(0,100))+
+     ylab(labelme)+
+    ggtitle(mytitle)+
+    theme_minimal()+
+    #theme(plot.title=element_text(hjust=.5))
+      scale_fill_viridis(discrete=TRUE,end=.85)
+        #scale_color_viridis(discrete=TRUE,end=.85)+
+        
+}
+
+#tiff(file="./ATG9-LC3/graphs/LC3ObVol_NSW4056_15Jun23.tiff",width=2500,height=5000,res=600)
+plotme(temp,temp$LC3Vol, "LC3B object volume","LC3B object volume")
+#dev.off()
+
+#tiff(file="./ATG9-LC3/graphs/LC3ObMaxInt_NSW4056_15Jun23.tiff",width=2500,height=5000,res=600)
+plotme(temp,temp$LC3MaxObjInt, "LC3B object max intensity","LC3B object max intensity")
+#dev.off()
+
+#tiff(file="./ATG9-LC3/graphs/LC3ObMeanInt_NSW4056_15Jun23.tiff",width=2500,height=5000,res=600)
+plotme(temp,temp$LC3MeanObjInt, "LC3B object mean intensity","LC3B object mean intensity")
+#dev.off()
+
+#tiff(file="./ATG9-LC3/graphs/LC3ObSumInt_NSW4056_15Jun23.tiff",width=2500,height=5000,res=600)
+plotme(temp,temp$LC3SumObjInt, "LC3B sum intensity per object","LC3B object mean intensity")
+#dev.off()
+```
