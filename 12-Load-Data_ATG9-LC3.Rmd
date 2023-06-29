@@ -29,7 +29,7 @@ CSV import - *Windows*
 *MUST HAVE FILES IN R PROJECT WD* 
 *change input file path*
 ```{r}
-temp=read.csv(file="./ATG9-LC3/datasets/CIC1033_28Jun23.csv",header=TRUE)
+temp=read.csv(file="./ATG9-LC3/datasets/CIC1033_29Jun23.csv",header=TRUE)
 temp$BvsS<-"Basal"
 temp$Rep<-3
 nobs=nrow(temp)
@@ -125,12 +125,12 @@ temp$BvsS<-factor(temp$BvsS, levels=c("Basal", "Starved"))
 img<-c()
 
 for (i in 1:ntemp) {
-  if (!is.na(temp[i,6]) & temp[i,6]<0.02) {
+  if (!is.na(temp[i,13]) & temp[i,13]>10) {
     img<-c(img,i)
   }
 }
 
-negPCC<-data.frame(temp[img,])
+largeLC3<-data.frame(temp[img,])
 
 ```
 
