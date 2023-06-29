@@ -1,0 +1,67 @@
+---
+title: "31-Statistical-Analysis-ATG9-LC3"
+output: html_notebook
+---
+
+
+Kruskal-Wallis Test of metrics within genetic type
+*NONPARAMETRIC DATA**multiple replicates*
+*pTidy and gTidy not yet adjusted for within genetic type analysis*
+```{r}
+
+#install.packages("tidyverse")
+#install.packages("ggpubr")
+#install.packages("rstatix")
+#library(tidyverse)
+#library(ggpubr)
+#library(rstatix)
+
+KW_LC3Count<-kruskal_test(LC3ObjCount~Type, data=stats)
+summary(KW_LC3Count)
+dt_LC3Count<-dunn_test(LC3ObjCount~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_M1<-kruskal_test(ManderCoeffM1~Type, data=stats)
+summary(KW_M1)
+dt_M1<-dunn_test(ManderCoeffM1~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_M2<-kruskal_test(ManderCoeffM2~Type, data=stats)
+summary(KW_M2)
+dt_M2<-dunn_test(ManderCoeffM2~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_MOC<-kruskal_test(ManderCoeffMOC~Type, data=stats)
+summary(KW_MOC)
+dt_MOC<-dunn_test(ManderCoeffMOC~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_PCC<-kruskal_test(PearsonCoeff~Type, data=stats)
+summary(KW_PCC)
+dt_PCC<-dunn_test(PearsonCoeff~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_LC3vol<-kruskal_test(LC3Vol~Type, data=stats)
+summary(KW_LC3vol)
+dt_LC3vol<-dunn_test(LC3Vol~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_LC3MeanObjInt<-kruskal_test(LC3MeanObjInt~Type, data=stats)
+summary(KW_LC3MeanObjInt)
+dt_LC3MeanObjInt<-dunn_test(LC3MeanObjInt~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_LC3MaxObjInt<-kruskal_test(LC3MaxObjInt~Type, data=stats)
+summary(KW_LC3MaxObjInt)
+dt_LC3MaxObjInt<-dunn_test(LC3MaxObjInt~Type, data=stats, p.adjust.method = "bonferroni")
+
+KW_LC3SumObjInt<-kruskal_test(LC3SumObjInt~Type, data=stats)
+summary(KW_LC3SumObjInt)
+dt_LC3SumObjInt<-dunn_test(LC3SumObjInt~Type, data=stats, p.adjust.method = "bonferroni")
+
+```
+
+
+
+R-bind and export results from Kruskal-Wallis and Dunn test
+```{r}
+Dunn_ATG9rescue<-rbind(dt_LC3Count, dt_M1,dt_M2,dt_MOC,dt_PCC,dt_LC3vol, dt_LC3MeanObjInt,dt_LC3MaxObjInt,dt_LC3SumObjInt  )
+
+
+
+write.csv(Dunn_ATG9rescue, file= "./ATG9-LC3/stats/Dunn_ATG9-LC3_4056-4057-1033_29Jun23.csv")
+
+```
