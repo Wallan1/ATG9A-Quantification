@@ -72,7 +72,28 @@ for (c in 1:ntemp) {
 temp$Type<-factor(temp$Type, levels=c("WT", "Control", "tepsin", "AP4E1"))
 ```
 
-*ADD LOGIC CHECKS*
+
+#Logic checks to ensure data is used only from properly segmented cells
+Find files where number of Nuclei in segmented cells does not match number of segmented cells:
+
+These files should be evaluated to identify images where cells were not segmented properly. 
+
+```{r}
+ntemp<-nrow(temp)
+temp[,2]<-as.numeric(temp[,2])
+temp[,3]<-as.numeric(temp[,3])
+rs<-c()
+
+for (i in 1:ntemp) {
+  if (!is.na(temp[i,2]) & temp[i,2]!=temp[i,3]) {
+      rs<-c(rs,i)
+    }
+  
+}
+
+badcell1<-data.frame(temp[rs,])
+```
+
 
 
 #Data calculation operations
@@ -91,5 +112,25 @@ for (t in c("WT", "Control", "tepsin", "AP4E1")) {
     }
   }
   }
+```
+
+
+Print list of images with outliers
+*identify images containing outlier values based on graphs*
+print list of images with outlier LAMP sum intensity per cell
+```{r}
+
+ntemp<-nrow(temp)
+temp$BvsS<-factor(temp$BvsS, levels=c("Basal", "Starved"))
+img<-c()
+
+for (i in 1:ntemp) {
+  if (!is.na(temp[i,6]) & temp[i,6]<0.02) {
+    img<-c(img,i)
+  }
+}
+
+negPCC<-data.frame(temp[img,])
+
 ```
 
