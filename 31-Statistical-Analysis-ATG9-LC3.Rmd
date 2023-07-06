@@ -73,12 +73,13 @@ U-Test of MOC
 
 *create tidy dataframes removing NA values prior to U test*
 ```{r}
+temp$Type<-factor(temp$Type, levels=c("Control", "tepsin"))
 
 tidyCell=temp[which(!is.na(temp$ManderCoeffMOC)),]
-tidyCell$Type<-as.numeric(tidyCell$Type, replace=TRUE)
+#tidyCell$Type<-as.numeric(tidyCell$Type, replace=TRUE)
 
 tidyObj=temp[which(!is.na(temp$LC3Vol)),]
-tidyObj$Type<-as.numeric(tidyObj$Type, replace=TRUE)
+#tidyObj$Type<-as.numeric(tidyObj$Type, replace=TRUE)
 
 
 
@@ -87,13 +88,15 @@ tidyObj$Type<-as.numeric(tidyObj$Type, replace=TRUE)
 
 
 ```{r}
-#install.packages("tidyverse")
-#install.packages("ggpubr")
-#install.packages("rstatix")
-#library(tidyverse)
-#library(ggpubr)
-#library(rstatix)
+install.packages("tidyverse")
+install.packages("ggpubr")
+install.packages("rstatix")
+library(tidyverse)
+library(ggpubr)
+library(rstatix)
+```
 
+```{r}
 
 PCCUtest<-wilcox_test(data=tidyCell, PearsonCoeff ~ Type, paired= FALSE)
 MOCUtest<-wilcox_test(data=tidyCell, ManderCoeffMOC ~ Type, paired= FALSE)
