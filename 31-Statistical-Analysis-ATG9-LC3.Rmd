@@ -65,3 +65,52 @@ Dunn_ATG9rescue<-rbind(dt_LC3Count, dt_M1,dt_M2,dt_MOC,dt_PCC,dt_LC3vol, dt_LC3M
 write.csv(Dunn_ATG9rescue, file= "./ATG9-LC3/stats/Dunn_ATG9-LC3_4056-4057-1033_29Jun23.csv")
 
 ```
+
+
+U-Test of MOC
+*for nonparametric distributions*
+
+
+*create tidy dataframes removing NA values prior to U test*
+```{r}
+
+tidyCell=temp[which(!is.na(temp$ManderCoeffMOC)),]
+tidyCell$Type<-as.numeric(tidyCell$Type, replace=TRUE)
+
+tidyObj=temp[which(!is.na(temp$LC3Vol)),]
+tidyObj$Type<-as.numeric(tidyObj$Type, replace=TRUE)
+
+
+
+```
+
+
+
+```{r}
+#install.packages("tidyverse")
+#install.packages("ggpubr")
+#install.packages("rstatix")
+#library(tidyverse)
+#library(ggpubr)
+#library(rstatix)
+
+
+PCCUtest<-wilcox_test(data=tidyCell, PearsonCoeff ~ Type, paired= FALSE)
+MOCUtest<-wilcox_test(data=tidyCell, ManderCoeffMOC ~ Type, paired= FALSE)
+M1Utest<-wilcox_test(data=tidyCell, ManderCoeffM1 ~ Type, paired= FALSE)
+M2Utest<-wilcox_test(data=tidyCell, ManderCoeffM2 ~ Type, paired= FALSE)
+
+LC3CountUtest<-wilcox_test(data=tidyObj, LC3ObjCount ~ Type, paired= FALSE)
+LC3VolUtest<-wilcox_test(data=tidyObj, LC3Vol ~ Type, paired= FALSE)
+LC3MeanIntUtest<-wilcox_test(data=tidyObj, LC3MeanObjInt ~ Type, paired= FALSE)
+LC3MaxIntUtest<-wilcox_test(data=tidyObj, LC3MaxObjInt ~ Type, paired= FALSE)
+LC3SumIntUtest<-wilcox_test(data=tidyObj, LC3SumObjInt ~ Type, paired= FALSE)
+
+ColocUtest<-rbind(PCCUtest,MOCUtest,M1Utest,M2Utest)
+write.csv(ColocUtest, file= "./ATG9-LC3/stats/Utest-coloc_ATG9-LC3_4056-4057-1033_5Jul23.csv")
+
+LC3Utest<-rbind(LC3CountUtest,LC3VolUtest,LC3MeanIntUtest,LC3MaxIntUtest, LC3SumIntUtest)
+write.csv(LC3Utest, file= "./ATG9-LC3/stats/Utest-LC3_ATG9-LC3_4056-4057-1033_5Jul23.csv")
+
+```
+
