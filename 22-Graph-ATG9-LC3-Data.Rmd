@@ -5,7 +5,7 @@ output: html_notebook
 
 *Optional to subset data*
 ```{r}
-subsetWCT<-temp[temp$Type == "WT" | temp$Type == "Control" | temp$Type == "tepsin",]
+subsetCT<-temp[temp$Type == "Control" | temp$Type == "tepsin",]
 
 
 ```
@@ -42,48 +42,48 @@ plotme<-function(dat,yaxis,labelme,mytitle){
      ylab(labelme)+
      ggtitle(mytitle)+
      theme_minimal()+
-    # scale_y_continuous(name=labelme,limits = c(0,100))+
+     #scale_y_continuous(name=labelme,limits = c(0.32,1))+
      theme(plot.title=element_text(hjust=.5))+
-        scale_fill_viridis(discrete=TRUE,end=.85) +
-        scale_color_viridis(discrete=TRUE,end=.85)+
+        scale_fill_viridis(discrete=TRUE,end=.45) +
+        scale_color_viridis(discrete=TRUE,end=.45)+
         scale_pattern_manual(values = c(Basal = "none", Starved = "stripe"))
   
 }
 
-#tiff(file="./ATG9-LC3/graphs/LC3perCell_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
-plotme(temp,temp$LC3ObjCount, "LC3B puncta per cell","")
+#tiff(file="./ATG9-LC3/graphs/LC3perCell_4056-4057-1033_05Jul23.tiff",width=2000,height=2500,res=600)
+#plotme(temp,temp$LC3ObjCount, "LC3B puncta per cell","")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/ATG9-LC3PCC_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
-plotme(temp,temp$PearsonCoeff, "PCC","ATG9A/LC3B co-localization (PCC)")
+#tiff(file="./ATG9-LC3/graphs/ATG9-LC3PCC_4056-4057-1033_adjY-v2_05Jul23.tiff",width=2000,height=2500,res=600)
+#plotme(temp,temp$PearsonCoeff, "PCC","ATG9A/LC3B co-localization (PCC)")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/ATG9-LC3MOC_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
-plotme(temp,temp$ManderCoeffMOC, "MOC","ATG9A/LC3B co-localization (MOC)")
+#tiff(file="./ATG9-LC3/graphs/ATG9-LC3MOC_4056-4057-1033_adjY-v2_05Jul23.tiff",width=2000,height=2500,res=600)
+#plotme(temp,temp$ManderCoeffMOC, "MOC","ATG9A/LC3B co-localization (MOC)")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/ATG9-LC3M1_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
+#tiff(file="./ATG9-LC3/graphs/ATG9-LC3M1_4056-4057-1033_adjY-v2_05Jul23.tiff",width=2000,height=2500,res=600)
 plotme(temp,temp$ManderCoeffM1, "M1: ATG9A/LC3","")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/ATG9-LC3M2_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
+#tiff(file="./ATG9-LC3/graphs/ATG9-LC3M2_4056-4057-1033_adjY-v2_05Jul23.tiff",width=2000,height=2500,res=600)
 plotme(temp,temp$ManderCoeffM2, "M2: LC3/ATG9A","")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/LC3ObVol_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
-plotme(temp,temp$LC3Vol, "LC3B object volume","LC3B object volume")
+#tiff(file="./ATG9-LC3/graphs/LC3ObVol_4056-4057-1033_05Jul23.tiff",width=2000,height=2500,res=600)
+#plotme(temp,temp$LC3Vol, "LC3B object volume","LC3B object volume")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/LC3ObMaxInt_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
-plotme(temp,temp$LC3MaxObjInt, "LC3B object max intensity","LC3B object max intensity")
+#tiff(file="./ATG9-LC3/graphs/LC3ObMaxInt_4056-4057-1033_05Jul23.tiff",width=2000,height=2500,res=600)
+#plotme(temp,temp$LC3MaxObjInt, "LC3B object max intensity","LC3B object max intensity")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/LC3ObMeanInt_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
-plotme(temp,temp$LC3MeanObjInt, "LC3B object mean intensity","LC3B object mean intensity")
+#tiff(file="./ATG9-LC3/graphs/LC3ObMeanInt_4056-4057-1033_05Jul23.tiff",width=2000,height=2500,res=600)
+#plotme(temp,temp$LC3MeanObjInt, "LC3B object mean intensity","LC3B object mean intensity")
 #dev.off()
 
-#tiff(file="./ATG9-LC3/graphs/LC3ObSumInt_4056-4057-1033_29Jun23.tiff",width=3000,height=2500,res=600)
-plotme(temp,temp$LC3SumObjInt, "LC3B sum intensity per object","LC3B object sum intensity")
+#tiff(file="./ATG9-LC3/graphs/LC3ObSumInt_4056-4057-1033_05Jul23.tiff",width=2000,height=2500,res=600)
+#plotme(temp,temp$LC3SumObjInt, "LC3B sum intensity per object","LC3B object sum intensity")
 #dev.off()
 
 ```
