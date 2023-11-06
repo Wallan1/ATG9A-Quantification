@@ -181,7 +181,7 @@ for (c in 1:ntemp) {
   if (substr(whole[c,1],48,48)=="0") {
     whole$include[c]<-"Y"
   }
-  else if (whole$meanMyc[c]>164) {
+  else if (whole$meanMyc[c]>147) {
     whole$include[c]<-"Y"
   }
     
@@ -307,7 +307,7 @@ for (t in c("WT", "Control", "tepsin")) {
 
 #Export dataframe
 ```{r}
-write.csv(wTidy, file= "./rescue-analysis_22May22/datasets/2023/NSW4046_tidydata-Myc164sort_4Nov23GA3.csv")
+write.csv(wTidy, file= "./rescue-analysis_22May22/datasets/2023/NSW4046_tidydata-Myc147sort_4Nov23GA3.csv")
 ```
 
 
